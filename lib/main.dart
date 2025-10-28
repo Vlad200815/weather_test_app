@@ -2,8 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:weather_test_app/api/api.dart';
-import 'package:weather_test_app/screens/home_screen.dart';
 import 'package:weather_test_app/theme/theme.dart';
+import "package:weather_test_app/router/rounter.dart";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,25 +18,24 @@ Future<void> main() async {
       supportedLocales: [Locale('en', 'US'), Locale('uk', "UA")],
       path: 'assets/translations',
       fallbackLocale: Locale('en', "US"),
-      child: MyApp(client: client),
+      child: MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.client});
+  const MyApp({super.key});
 
-  final WeatherApiClient client;
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Weather App',
       theme: myTheme,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      home: HomeScreen(client: client),
+      routerConfig: router,
     );
   }
 }

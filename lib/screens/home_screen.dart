@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:weather_test_app/api/api.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.client});
-
-  final WeatherApiClient client;
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -29,13 +29,13 @@ class _HomeScreenState extends State<HomeScreen> {
     //   print("Error fetching weather: $e");
     // }
 
-    widget.client
-        .getWeather(
-          latitude: 52.52,
-          longitude: 13.419998,
-          hourly: "temperature_2m",
-        )
-        .then((value) => print(value.hourly.time));
+    //   widget.client
+    //       .getWeather(
+    //         latitude: 52.52,
+    //         longitude: 13.419998,
+    //         hourly: "temperature_2m",
+    //       )
+    //       .then((value) => print(value.hourly.time));
   }
 
   final LocationSettings locationSettings = LocationSettings(
@@ -100,9 +100,20 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(
-          'city_country',
-        ).tr(namedArgs: {'city': "Лутськ", "country": "Україна"}),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+
+          children: [
+            Text(
+              'city_country',
+            ).tr(namedArgs: {'city': "Лутськ", "country": "Україна"}),
+            SizedBox(
+              height: 100,
+              width: 100,
+              child: SvgPicture.asset("assets/icons/pressure.svg"),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -114,6 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
           // print(position.longitude);
 
           // await getData();
+          context.go('/ten_days');
         },
       ),
     );

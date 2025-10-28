@@ -36,6 +36,7 @@ dependencies:
 
   #UI
   cupertino_icons: ^1.0.8
+  flutter_svg: ^2.2.1
 
   #API integration
   retrofit: ^4.8.0
@@ -45,6 +46,7 @@ dependencies:
   #State Menagment
   bloc: ^9.1.0
   flutter_bloc: ^9.1.1
+  equatable: ^2.0.7
   
   #Firebase
   firebase_core: ^4.2.0
@@ -97,6 +99,9 @@ flutter:
   assets:
     - .env
     - assets/translations/
+    - assets/weather_types/
+    - assets/icons/
+    - assets/poster.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

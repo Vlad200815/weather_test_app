@@ -26,6 +26,36 @@ final myTheme = ThemeData(
       fontWeight: FontWeight.w400,
       color: AppColors.black,
     ),
+    titleLarge: GoogleFonts.ptSans(
+      fontSize: FontSizes._titileLargeFontSize,
+      fontWeight: FontWeight.w400,
+      color: AppColors.white,
+    ),
+    titleMedium: GoogleFonts.ptSans(
+      fontSize: FontSizes._titleMediumFontSize,
+      fontWeight: FontWeight.w400,
+      color: AppColors.black,
+    ),
+    titleSmall: GoogleFonts.ptSans(
+      fontSize: FontSizes._titleSmallFontSize,
+      fontWeight: FontWeight.w400,
+      color: AppColors.white,
+    ),
+    labelLarge: GoogleFonts.ptSans(
+      fontSize: FontSizes._labelLargeFontSize,
+      fontWeight: FontWeight.w400,
+      color: AppColors.black,
+    ),
+    labelMedium: GoogleFonts.ptSans(
+      fontSize: FontSizes._labelMediumFontSize,
+      fontWeight: FontWeight.w400,
+      color: AppColors.black,
+    ),
+    labelSmall: GoogleFonts.ptSans(
+      fontSize: FontSizes._labelSmallFontSize,
+      fontWeight: FontWeight.w400,
+      color: AppColors.black,
+    ),
   ),
 );
 
@@ -35,7 +65,7 @@ class FontSizes {
   static const double _titileLargeFontSize = 22;
   static const double _titleMediumFontSize = 18.8;
   static const double _titleSmallFontSize = 18;
-  static const double _labelLargeFontSize = 15;
+  static const double _labelLargeFontSize = 16;
   static const double _labelMediumFontSize = 14;
   static const double _labelSmallFontSize = 11;
   static const double _labelMicroFontSize = 10;
