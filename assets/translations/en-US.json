@@ -1,0 +1,36 @@
+{   
+    "city_country": "{city}, {country}",
+    "weather": "{weather}",
+
+
+    "day": "Day",
+    "night": "Night",
+    "month": "{month}",
+    "one_hour_after_now": "{time1}",
+    "two_hour_after_now": "{time2}",
+    "three_hour_after_now": "{time3}",
+    "four_hour_after_now": "{time4}",
+    "five_hour_after_now": "{time5}",
+
+
+
+
+
+
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "10_days": "10 days",
+    "wind_speed": "Wind speed",
+    "rain_chance": "Rain chance",
+    "pressure": "Pressure",
+    "uv_index": "UV Index",
+    "hourly_forecast": "Hourly forecast",
+    "now": "Now",
+    "day_forecast": "Day forecast",
+    "feels_like": "Feels like",
+    "chance_of_rain": "Chance of rain",
+    "sunrise": "Sunrise",
+    "sunset": "Sunset",
+    "hour_age": "h ago"
+
+}

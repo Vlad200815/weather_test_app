@@ -99,7 +99,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text("Hello World")),
+      body: Center(
+        child: Text(
+          'city_country',
+        ).tr(namedArgs: {'city': "Лутськ", "country": "Україна"}),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           // await _determinePosition();
