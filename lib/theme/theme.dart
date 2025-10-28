@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:weather_test_app/theme/app_colors.dart';
 
 final myTheme = ThemeData(
@@ -13,14 +14,29 @@ final myTheme = ThemeData(
 
     brightness: Brightness.light,
   ),
+
+  textTheme: TextTheme(
+    displayLarge: GoogleFonts.ptSans(
+      fontSize: FontSizes._displayLargeFontSize,
+      fontWeight: FontWeight.w400,
+      color: AppColors.white,
+    ),
+    displayMedium: GoogleFonts.roboto(
+      fontSize: FontSizes._displayMediumFontSize,
+      fontWeight: FontWeight.w400,
+      color: AppColors.black,
+    ),
+  ),
 );
 
-class FontStyles {
-  static const double _extremeLargeFontSize = 112;
-  static const double _superLargeFontSize = 57;
-  static const double _largeFontSize = 22;
-  static const double _megaMediumFontSize = 18;
-  static const double _degreesFontSize = 18.8;
-  static const double _mediumFontSize = 16;
-  // static const double _
+class FontSizes {
+  static const double _displayLargeFontSize = 112;
+  static const double _displayMediumFontSize = 57;
+  static const double _titileLargeFontSize = 22;
+  static const double _titleMediumFontSize = 18.8;
+  static const double _titleSmallFontSize = 18;
+  static const double _labelLargeFontSize = 15;
+  static const double _labelMediumFontSize = 14;
+  static const double _labelSmallFontSize = 11;
+  static const double _labelMicroFontSize = 10;
 }

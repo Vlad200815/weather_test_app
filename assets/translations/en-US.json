@@ -2,7 +2,6 @@
     "city_country": "{city}, {country}",
     "weather": "{weather}",
 
-
     "day": "Day",
     "night": "Night",
     "month": "{month}",
@@ -11,11 +10,19 @@
     "three_hour_after_now": "{time3}",
     "four_hour_after_now": "{time4}",
     "five_hour_after_now": "{time5}",
-
-
-
-
-
+    "mon": "Mon",
+    "tue": "Tue",
+    "wen": "Wen",
+    "thu": "Thu",
+    "fir": "Fri",
+    "sat": "Sat",
+    "sun": "Sun",
+    "first_time_chance_of_rain": "{chace_of_rain_time1}",
+    "second_time_chance_of_rain": "{chace_of_rain_time2}",
+    "third_time_chance_of_rain": "{chace_of_rain_time3}",
+    "fourth_time_chance_of_rain": "{chace_of_rain_time4}",
+    "sunrise_time": "{sunrise_time}",
+    "sunset_time": "{sunset_time}",
 
     "today": "Today",
     "tomorrow": "Tomorrow",
