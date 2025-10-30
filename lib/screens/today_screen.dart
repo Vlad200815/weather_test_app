@@ -1,19 +1,19 @@
-import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
-import 'package:weather_test_app/api/api.dart';
+import 'package:weather_test_app/di/di.dart';
+import 'package:weather_test_app/responsiveness/responsiveness.dart';
+import 'package:weather_test_app/widgets/day_forecast.dart';
+import '../widgets/widgets.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class TodayScreen extends StatefulWidget {
+  const TodayScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<TodayScreen> createState() => _TodayScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _TodayScreenState extends State<TodayScreen> {
   @override
   void initState() {
     super.initState();
@@ -98,23 +98,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final scale = getIt<Responsiveness>().scale;
+    final theme = Theme.of(context);
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-
-          children: [
-            Text(
-              'city_country',
-            ).tr(namedArgs: {'city': "Лутськ", "country": "Україна"}),
-            SizedBox(
-              height: 100,
-              width: 100,
-              child: SvgPicture.asset("assets/icons/pressure.svg"),
-            ),
-          ],
-        ),
+      backgroundColor: theme.colorScheme.surface,
+      body: CustomScrollView(
+        slivers: [
+          PosterAppBar(),
+          NavBar(),
+          InfoBoxes(),
+          HourlyForecastPanel(),
+          DayForecast(),
+        ],
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           // await _determinePosition();
@@ -127,6 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
           // await getData();
           context.go('/ten_days');
         },
+        // child: SvgPicture.asset("assets/poster.svg"),
       ),
     );
   }

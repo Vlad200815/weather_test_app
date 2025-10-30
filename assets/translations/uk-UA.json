@@ -1,10 +1,11 @@
 {   
     "city_country": "{city}, {country}",
     "weather": "{weather}",
+    "degrees": "{degrees}°",
 
-    "day": "День",
-    "night": "Ніч",
-    "month": "{month}",
+    "day": "День {day_average_tem}°",
+    "night": "Ніч {night_average_tem}°",
+    "date": "{month} {day}, {time}",
     "one_hour_after_now": "{time1}",
     "two_hour_after_now": "{time2}",
     "three_hour_after_now": "{time3}",
@@ -34,7 +35,7 @@
     "hourly_forecast": "Погодинний прогноз",
     "now": "Зараз",
     "day_forecast": "Прогноз на день",
-    "feels_like": "Відчувається як",
+    "feels_like": "Відчувається як {feels_like_degrees}°",
     "chance_of_rain": "Ймовірність дощу",
     "sunrise": "Схід сонця",
     "sunset": "Захід сонця",

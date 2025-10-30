@@ -1,10 +1,12 @@
 {   
     "city_country": "{city}, {country}",
     "weather": "{weather}",
+    "degrees": "{degrees}°",
 
-    "day": "Day",
-    "night": "Night",
-    "month": "{month}",
+
+    "day": "Day {day_average_tem}°",
+    "night": "Night {night_average_tem}°",
+    "date": "{month} {day}, {time}",
     "one_hour_after_now": "{time1}",
     "two_hour_after_now": "{time2}",
     "three_hour_after_now": "{time3}",
@@ -34,7 +36,7 @@
     "hourly_forecast": "Hourly forecast",
     "now": "Now",
     "day_forecast": "Day forecast",
-    "feels_like": "Feels like",
+    "feels_like": "Feels like {feels_like_degrees}°",
     "chance_of_rain": "Chance of rain",
     "sunrise": "Sunrise",
     "sunset": "Sunset",

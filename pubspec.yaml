@@ -37,6 +37,8 @@ dependencies:
   #UI
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.2.1
+  # font_awesome_flutter: ^10.12.0
+  fl_chart: ^1.1.1
 
   #API integration
   retrofit: ^4.8.0
@@ -47,6 +49,9 @@ dependencies:
   bloc: ^9.1.0
   flutter_bloc: ^9.1.1
   equatable: ^2.0.7
+
+  #DI
+  get_it: ^8.2.0
   
   #Firebase
   firebase_core: ^4.2.0
@@ -68,6 +73,8 @@ dependencies:
 
   #Fonts
   google_fonts: ^6.3.2
+
+
 
 dev_dependencies:
   flutter_test:
@@ -101,7 +108,9 @@ flutter:
     - assets/translations/
     - assets/weather_types/
     - assets/icons/
-    - assets/poster.svg
+    - assets/poster.png
+    - assets/arrow_drop_down.svg
+    - assets/arrow_drop_up.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
