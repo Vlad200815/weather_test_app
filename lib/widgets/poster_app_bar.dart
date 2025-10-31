@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:weather_test_app/di/di.dart';
 import 'package:weather_test_app/responsiveness/responsiveness.dart';
 import 'package:weather_test_app/theme/app_colors.dart';
@@ -13,6 +14,8 @@ class PosterAppBar extends StatelessWidget {
     final scale = getIt<Responsiveness>().scale;
     final theme = Theme.of(context);
     return SliverAppBar(
+      collapsedHeight: 228 * scale,
+
       floating: true,
       pinned: true,
       expandedHeight: 412 * scale,
@@ -47,7 +50,9 @@ class PosterAppBar extends StatelessWidget {
                           namedArgs: {"city": "Lutsk", "country": "Ukraine"},
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.go("/search");
+                          },
                           icon: Icon(
                             Icons.search_rounded,
                             color: AppColors.white,

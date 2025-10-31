@@ -10,16 +10,14 @@ class InfoBox extends StatelessWidget {
     super.key,
     required this.imgPath,
     required this.title,
-    required this.rateNum,
     required this.subtitle,
-    required this.isRateBigger,
+    required this.rateChangeWidget,
   });
 
   final String imgPath;
   final String title;
   final String subtitle;
-  final String rateNum;
-  final bool isRateBigger;
+  final Widget rateChangeWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -75,21 +73,22 @@ class InfoBox extends StatelessWidget {
             Positioned(
               top: 40 * scale,
               left: 108 * scale,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  isRateBigger
-                      ? SvgPicture.asset("assets/arrow_drop_up.svg")
-                      : SvgPicture.asset("assets/arrow_drop_down.svg"),
-                  Text(
-                    rateNum,
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
+              child: rateChangeWidget,
+              // child: Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     isRateBigger
+              //         ? SvgPicture.asset("assets/arrow_drop_up.svg")
+              //         : SvgPicture.asset("assets/arrow_drop_down.svg"),
+              //     Text(
+              //       rateNum,
+              //       style: theme.textTheme.labelSmall?.copyWith(
+              //         fontSize: 10,
+              //         fontWeight: FontWeight.w500,
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ),
           ],
         ),

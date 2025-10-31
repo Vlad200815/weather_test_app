@@ -2,7 +2,7 @@
     "city_country": "{city}, {country}",
     "weather": "{weather}",
     "degrees": "{degrees}°",
-
+     
 
     "day": "Day {day_average_tem}°",
     "night": "Night {night_average_tem}°",

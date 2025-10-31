@@ -39,6 +39,7 @@ dependencies:
   flutter_svg: ^2.2.1
   # font_awesome_flutter: ^10.12.0
   fl_chart: ^1.1.1
+  percent_indicator: ^4.2.5
 
   #API integration
   retrofit: ^4.8.0
@@ -111,6 +112,8 @@ flutter:
     - assets/poster.png
     - assets/arrow_drop_down.svg
     - assets/arrow_drop_up.svg
+    - assets/divider.svg
+    - assets/expand_more.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

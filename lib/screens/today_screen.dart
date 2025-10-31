@@ -3,7 +3,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:weather_test_app/di/di.dart';
 import 'package:weather_test_app/responsiveness/responsiveness.dart';
-import 'package:weather_test_app/widgets/day_forecast.dart';
 import '../widgets/widgets.dart';
 
 class TodayScreen extends StatefulWidget {
@@ -109,6 +108,9 @@ class _TodayScreenState extends State<TodayScreen> {
           InfoBoxes(),
           HourlyForecastPanel(),
           DayForecast(),
+          ChanceOfRain(),
+          SunriseAndSunset(),
+          SliverToBoxAdapter(child: SizedBox(height: 20 * scale)),
         ],
       ),
 

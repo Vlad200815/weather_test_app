@@ -22,6 +22,12 @@ final GoRouter router = GoRouter(
             return const TomorrowScreen();
           },
         ),
+        GoRoute(
+          path: '/search',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SearchScreen();
+          },
+        ),
       ],
     ),
   ],
