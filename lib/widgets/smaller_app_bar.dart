@@ -29,94 +29,125 @@ class _SmallerAppBarState extends State<SmallerAppBar> {
     final theme = Theme.of(context);
     final scale = getIt<Responsiveness>().scale;
 
-    return SliverToBoxAdapter(
-      child: Container(
-        color: AppColors.appBarColor,
+    return SliverPersistentHeader(
+      pinned: true,
+      delegate: _FixedAppBarDelegate(
         height: 228 * scale,
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: 30 * scale,
-            right: 30 * scale,
-            bottom: 10 * scale,
-            top: 20 * scale,
-          ),
-          child: Column(
-            children: [
-              SizedBox(height: 10 * scale),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "city_country",
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      color: AppColors.black,
-                    ),
-                  ).tr(namedArgs: {"city": "Lutsk", "country": "Ukraine"}),
-                  IconButton(
-                    onPressed: () {
-                      context.go("/search");
-                    },
-                    icon: Icon(Icons.search_rounded, color: AppColors.black),
-                  ),
-                ],
-              ),
-              // SizedBox(height: 10 * scale),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                        height: 60 * scale,
-                        child: Text(
-                          "weather",
-                          style: theme.textTheme.displayMedium,
-                        ).tr(namedArgs: {"weather": "3°"}),
+        child: Container(
+          color: AppColors.appBarColor,
+
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: 30 * scale,
+              right: 30 * scale,
+              bottom: 10 * scale,
+              top: 20 * scale,
+            ),
+            child: Column(
+              children: [
+                SizedBox(height: 10 * scale),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "city_country",
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        color: AppColors.black,
                       ),
-                      Text(
-                        "feels_like",
-                        style: theme.textTheme.titleSmall?.copyWith(
-                          color: AppColors.black,
-                        ),
-                      ).tr(namedArgs: {"feels_like_degrees": "-2"}),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 59 * scale,
-                    width: 59 * scale,
-                    child: SvgPicture.asset(
-                      "assets/weather_types/cloud_and_sun.svg",
+                    ).tr(namedArgs: {"city": "Lutsk", "country": "Ukraine"}),
+                    IconButton(
+                      onPressed: () {
+                        context.go("/search");
+                      },
+                      icon: Icon(Icons.search_rounded, color: AppColors.black),
                     ),
-                  ),
-                ],
-              ),
-              Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  NavBox(
-                    isEnabeled: _selectedIndex == 0,
-                    name: "today",
-                    onTap: () => _setNavIndex(0, context, "/"),
-                  ),
-                  NavBox(
-                    isEnabeled: _selectedIndex == 1,
-                    name: "tomorrow",
-                    onTap: () => _setNavIndex(1, context, "/tomorrow"),
-                  ),
-                  NavBox(
-                    isEnabeled: _selectedIndex == 2,
-                    name: "10_days",
-                    onTap: () => _setNavIndex(2, context, "/ten_days"),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10 * scale),
-            ],
+                  ],
+                ),
+                // SizedBox(height: 10 * scale),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          height: 60 * scale,
+                          child: Text(
+                            "weather",
+                            style: theme.textTheme.displayMedium,
+                          ).tr(namedArgs: {"weather": "3°"}),
+                        ),
+                        Text(
+                          "feels_like",
+                          style: theme.textTheme.titleSmall?.copyWith(
+                            color: AppColors.black,
+                          ),
+                        ).tr(namedArgs: {"feels_like_degrees": "-2"}),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 59 * scale,
+                      width: 59 * scale,
+                      child: SvgPicture.asset(
+                        "assets/weather_types/cloud_and_sun.svg",
+                      ),
+                    ),
+                  ],
+                ),
+                Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    NavBox(
+                      isEnabeled: _selectedIndex == 0,
+                      name: "today",
+                      onTap: () => _setNavIndex(0, context, "/"),
+                    ),
+                    NavBox(
+                      isEnabeled: _selectedIndex == 1,
+                      name: "tomorrow",
+                      onTap: () => _setNavIndex(1, context, "/tomorrow"),
+                    ),
+                    NavBox(
+                      isEnabeled: _selectedIndex == 2,
+                      name: "10_days",
+                      onTap: () => _setNavIndex(2, context, "/ten_days"),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10 * scale),
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+}
+
+// 👇 Custom delegate with fixed height (no expansion/collapse)
+class _FixedAppBarDelegate extends SliverPersistentHeaderDelegate {
+  final double height;
+  final Widget child;
+
+  _FixedAppBarDelegate({required this.height, required this.child});
+
+  @override
+  double get minExtent => height;
+  @override
+  double get maxExtent => height; // 👈 fixed same height
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return child;
+  }
+
+  @override
+  bool shouldRebuild(_FixedAppBarDelegate oldDelegate) {
+    return height != oldDelegate.height || child != oldDelegate.child;
   }
 }

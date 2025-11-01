@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:weather_test_app/api/api.dart';
 import 'package:weather_test_app/di/di.dart';
@@ -10,6 +11,10 @@ import "package:weather_test_app/router/rounter.dart";
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   await dotenv.load(fileName: ".env");
   setupDependencies();
 
