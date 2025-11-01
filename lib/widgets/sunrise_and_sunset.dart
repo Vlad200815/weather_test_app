@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:weather_test_app/di/di.dart';
-import 'package:weather_test_app/responsiveness/responsiveness.dart';
+import 'package:weather_test_app/services/responsiveness.dart';
 import 'package:weather_test_app/widgets/widgets.dart';
 
 class SunriseAndSunset extends StatelessWidget {

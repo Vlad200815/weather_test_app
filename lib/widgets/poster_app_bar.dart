@@ -1,9 +1,15 @@
+import 'dart:math';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:weather_test_app/bloc/collapsed_cubit/collapsed_cubit.dart';
+import 'package:weather_test_app/bloc/get_city_and_country_cubit/get_city_and_country_cubit.dart';
 import 'package:weather_test_app/di/di.dart';
-import 'package:weather_test_app/responsiveness/responsiveness.dart';
+import 'package:weather_test_app/main.dart';
+import 'package:weather_test_app/services/responsiveness.dart';
 import 'package:weather_test_app/theme/app_colors.dart';
 import 'package:weather_test_app/widgets/change_app_bar.dart';
 
@@ -12,19 +18,21 @@ class PosterAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isCollapsed = false;
     final scale = getIt<Responsiveness>().scale;
     final theme = Theme.of(context);
     return SliverAppBar(
       collapsedHeight: 190 * scale,
-      // floating: true,
       pinned: true,
       expandedHeight: 412 * scale,
       flexibleSpace: LayoutBuilder(
         builder: (context, constraints) {
           final double height = constraints.maxHeight;
-          isCollapsed = height < 260 * scale;
-
+          final isCollapsed = height < 260 * scale;
+          if (isCollapsed == true) {
+            context.read<CollapsedCubit>().collapse();
+          } else {
+            context.read<CollapsedCubit>().expand();
+          }
           return AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
             child: isCollapsed
@@ -50,29 +58,43 @@ class PosterAppBar extends StatelessWidget {
                             child: Column(
                               children: [
                                 SizedBox(height: 20 * scale),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "city_country",
-                                      style: theme.textTheme.titleLarge,
-                                    ).tr(
-                                      namedArgs: {
-                                        "city": "Lutsk",
-                                        "country": "Ukraine",
-                                      },
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        context.go("/search");
-                                      },
-                                      icon: Icon(
-                                        Icons.search_rounded,
-                                        color: AppColors.white,
-                                      ),
-                                    ),
-                                  ],
+                                BlocBuilder<
+                                  GetCityAndCountryCubit,
+                                  GetCityAndCountryState
+                                >(
+                                  builder: (context, state) {
+                                    if (state is GetCityAndCountrySuccess) {
+                                      return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "city_country",
+                                            style: theme.textTheme.titleLarge,
+                                          ).tr(
+                                            namedArgs: {
+                                              "city": state.city,
+                                              "country": state.country,
+                                            },
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              context.go("/search");
+                                            },
+                                            icon: Icon(
+                                              Icons.search_rounded,
+                                              color: AppColors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    } else if (state
+                                        is GetCityAndCountryFailure) {
+                                      return Text("Error: ${state.error}");
+                                    } else {
+                                      return SizedBox();
+                                    }
+                                  },
                                 ),
                                 SizedBox(height: 20 * scale),
                                 SizedBox(

@@ -3,7 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:weather_test_app/di/di.dart';
-import 'package:weather_test_app/responsiveness/responsiveness.dart';
+import 'package:weather_test_app/services/responsiveness.dart';
 import 'package:weather_test_app/theme/app_colors.dart';
 import 'package:weather_test_app/widgets/my_chart_bar.dart';
 
