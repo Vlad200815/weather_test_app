@@ -7,12 +7,16 @@ part "weather_response_model.g.dart";
 class WeatherResponseModel {
   final double latitude;
   final double longitude;
+  final CurrentData current;
   final HourlyData hourly;
+  final DailyData daily;
 
   WeatherResponseModel({
     required this.latitude,
     required this.longitude,
+    required this.current,
     required this.hourly,
+    required this.daily,
   });
 
   factory WeatherResponseModel.fromJson(Map<String, dynamic> json) =>
