@@ -11,9 +11,7 @@ part of 'api.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter,avoid_unused_constructor_parameters,unreachable_from_main
 
 class _WeatherApiClient implements WeatherApiClient {
-  _WeatherApiClient(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'https://api.open-meteo.com/v1/';
-  }
+  _WeatherApiClient(this._dio, {this.baseUrl, this.errorLogger});
 
   final Dio _dio;
 
@@ -25,13 +23,23 @@ class _WeatherApiClient implements WeatherApiClient {
   Future<WeatherResponseModel> getWeather({
     required double latitude,
     required double longitude,
-    required String hourly,
+    String daily =
+        "weather_code,sunrise,sunset,uv_index_max,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
+    String hourly = "temperature_2m,weather_code",
+    String current =
+        "temperature_2m,apparent_temperature,wind_speed_10m,weather_code,surface_pressure",
+    String timezone = "auto",
+    int forecastDays = 14,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'latitude': latitude,
       r'longitude': longitude,
+      r'daily': daily,
       r'hourly': hourly,
+      r'current': current,
+      r'timezone': timezone,
+      r'forecast_days': forecastDays,
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
@@ -39,7 +47,7 @@ class _WeatherApiClient implements WeatherApiClient {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'forecast',
+            '/v1/forecast',
             queryParameters: queryParameters,
             data: _data,
           )

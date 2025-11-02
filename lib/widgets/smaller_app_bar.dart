@@ -88,8 +88,8 @@ class _SmallerAppBarState extends State<SmallerAppBar> {
                     SizedBox(
                       height: 59 * scale,
                       width: 59 * scale,
-                      child: SvgPicture.asset(
-                        "assets/weather_types/cloud_and_sun.svg",
+                      child: Image.asset(
+                        "assets/weather_types/cloud_and_sun.png",
                       ),
                     ),
                   ],

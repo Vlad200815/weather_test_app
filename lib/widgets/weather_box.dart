@@ -32,7 +32,10 @@ class WeatherBox extends StatelessWidget {
           SizedBox(
             width: 24 * scale,
             height: 32 * scale,
-            child: SvgPicture.asset(weatherImgPath),
+            child: Image.asset(
+              weatherImgPath,
+              filterQuality: FilterQuality.high,
+            ),
           ),
           // SizedBox(height: 4 * scale),
           Text(

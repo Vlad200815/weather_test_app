@@ -134,9 +134,11 @@ class PosterAppBar extends StatelessWidget {
                                         children: [
                                           SizedBox(
                                             height: 107 * scale,
-                                            width: 80.25 * scale,
-                                            child: SvgPicture.asset(
-                                              "assets/weather_types/cloud_and_sun.svg",
+                                            // width: 80.25 * scale,
+                                            width: 70.25 * scale,
+                                            child: Image.asset(
+                                              "assets/weather_types/cloud_and_sun.png",
+                                              filterQuality: FilterQuality.high,
                                             ),
                                           ),
                                           Text(

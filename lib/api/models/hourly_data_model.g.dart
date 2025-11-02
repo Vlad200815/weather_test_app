@@ -11,10 +11,14 @@ HourlyData _$HourlyDataFromJson(Map<String, dynamic> json) => HourlyData(
   temperature: (json['temperature_2m'] as List<dynamic>)
       .map((e) => (e as num).toDouble())
       .toList(),
+  weatherCode: (json['weather_code'] as List<dynamic>)
+      .map((e) => (e as num).toInt())
+      .toList(),
 );
 
 Map<String, dynamic> _$HourlyDataToJson(HourlyData instance) =>
     <String, dynamic>{
       'time': instance.time,
       'temperature_2m': instance.temperature,
+      'weather_code': instance.weatherCode,
     };

@@ -58,32 +58,32 @@ class HourlyForecastPanel extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     WeatherBox(
-                      weatherImgPath: "assets/weather_types/cloud_and_sun.svg",
+                      weatherImgPath: "assets/weather_types/cloud_and_sun.png",
                       time: "now".tr(),
                       degrees: 10,
                     ),
                     WeatherBox(
-                      weatherImgPath: "assets/weather_types/cloud_and_sun.svg",
+                      weatherImgPath: "assets/weather_types/cloud_and_sun.png",
                       time: "now".tr(),
                       degrees: 10,
                     ),
                     WeatherBox(
-                      weatherImgPath: "assets/weather_types/cloud_and_sun.svg",
+                      weatherImgPath: "assets/weather_types/cloud_and_sun.png",
                       time: "now".tr(),
                       degrees: 10,
                     ),
                     WeatherBox(
-                      weatherImgPath: "assets/weather_types/cloud_and_sun.svg",
+                      weatherImgPath: "assets/weather_types/cloud_and_sun.png",
                       time: "now".tr(),
                       degrees: 10,
                     ),
                     WeatherBox(
-                      weatherImgPath: "assets/weather_types/cloud_and_sun.svg",
+                      weatherImgPath: "assets/weather_types/cloud_and_sun.png",
                       time: "now".tr(),
                       degrees: 10,
                     ),
                     WeatherBox(
-                      weatherImgPath: "assets/weather_types/cloud_and_sun.svg",
+                      weatherImgPath: "assets/weather_types/cloud_and_sun.png",
                       time: "now".tr(),
                       degrees: 10,
                     ),

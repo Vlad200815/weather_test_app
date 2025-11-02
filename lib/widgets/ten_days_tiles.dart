@@ -105,8 +105,8 @@ class WeatherTile extends StatelessWidget {
                   SizedBox(
                     height: 54 * scale,
                     width: 54 * scale,
-                    child: SvgPicture.asset(
-                      "assets/weather_types/cloud_and_sun.svg",
+                    child: Image.asset(
+                      "assets/weather_types/cloud_and_sun.png",
                     ),
                   ),
                   Padding(
