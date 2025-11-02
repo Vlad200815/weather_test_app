@@ -16,7 +16,7 @@ abstract class WeatherApiClient {
     return WeatherApiClient(dio);
   }
 
-  @GET('/v1/forecast')
+  @GET('forecast')
   Future<WeatherResponseModel> getWeather({
     @Query("latitude") required double latitude,
     @Query("longitude") required double longitude,

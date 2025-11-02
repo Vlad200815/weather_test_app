@@ -2,23 +2,40 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:weather_test_app/di/di.dart';
+import 'package:weather_test_app/bloc/location_cubit/location_cubit.dart';
 import 'package:weather_test_app/services/location_service.dart';
 
 part 'get_city_and_country_state.dart';
 
 class GetCityAndCountryCubit extends Cubit<GetCityAndCountryState> {
-  final LocationService _locationService = getIt<LocationService>();
+  final LocationCubit locationCubit;
+  final LocationService locationService;
 
-  GetCityAndCountryCubit() : super(GetCityAndCountryInitial());
+  GetCityAndCountryCubit({
+    required this.locationCubit,
+    required this.locationService,
+  }) : super(GetCityAndCountryInitial()) {
+    locationCubit.stream.listen((event) async {
+      if (event is LocationSuccess) {
+        await getCityAndCountry();
+      }
+    });
+  }
 
   Future<void> getCityAndCountry() async {
     emit(GetCityAndCountryProgress());
     try {
-      final Position position = await _locationService.determinePosition();
-      final Map<String, String> location = await _locationService
-          .getCityAndCountry(position: position);
+      if (locationCubit.state is! LocationSuccess) {
+        log("Failed the LocationCubit hasn't been loaded yet");
+        return;
+      }
+      final position = locationCubit.state as LocationSuccess;
+
+      final double lat = position.latitude;
+      final double lon = position.longitude;
+      // final Position position = await _locationService.determinePosition();
+      final Map<String, String> location = await locationService
+          .getCityAndCountry(latitude: lat, longitude: lon);
       final String city = location["city"]!;
       final String country = location["country"]!;
 
@@ -26,10 +43,11 @@ class GetCityAndCountryCubit extends Cubit<GetCityAndCountryState> {
         GetCityAndCountrySuccess(
           city: city,
           country: country,
-          latitude: position.latitude,
-          longitude: position.longitude,
+          latitude: lat,
+          longitude: lon,
         ),
       );
+      log("Got city and country");
     } catch (e) {
       log("-------------------------------");
       log(e.toString());

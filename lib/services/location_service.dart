@@ -4,12 +4,15 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocationService {
+  double? latitude;
+  double? longitude;
+
   final LocationSettings locationSettings = LocationSettings(
     accuracy: LocationAccuracy.high,
     distanceFilter: 100,
   );
 
-  Future<Position> determinePosition() async {
+  Future<void> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -48,17 +51,32 @@ class LocationService {
     // print(await Geolocator.getCurrentPosition());
     // return await Geolocator.getCurrentPosition();
 
-    return await Geolocator.getCurrentPosition(
+    final position = await Geolocator.getCurrentPosition(
       locationSettings: locationSettings,
     );
+
+    latitude = position.latitude;
+    longitude = position.longitude;
+
+    if (latitude == null || longitude == null) {
+      log(
+        "-------------------Latitude is null and longitude------------------",
+      );
+      return;
+    }
+
+    log("-----------Location is loaded----------------");
+    log(position.longitude.toString());
+    log(position.latitude.toString());
   }
 
   Future<Map<String, String>> getCityAndCountry({
-    required Position position,
+    required double latitude,
+    required double longitude,
   }) async {
     List<Placemark> placemarks = await placemarkFromCoordinates(
-      position.latitude,
-      position.longitude,
+      latitude,
+      longitude,
     );
 
     if (placemarks.isNotEmpty) {

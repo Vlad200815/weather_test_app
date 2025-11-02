@@ -16,12 +16,14 @@ class WeatherApiBloc extends Bloc<WeatherApiEvent, WeatherApiState> {
     on<OnGetWeatherEvent>((event, emit) async {
       emit(GetWeatherApiProgress());
       try {
-        final Position position = await _locationService.determinePosition();
+        // final Position position = await _locationService.determinePosition();
+        final LocationService location = getIt<LocationService>();
+        final double lat = location.latitude!;
+        final double lon = location.longitude!;
 
         final WeatherResponseModel response = await apiClient.getWeather(
-          latitude: position.latitude,
-          longitude: position.longitude,
-          hourly: "temperature_2m",
+          latitude: lat,
+          longitude: lon,
         );
         emit(GetWeatherApiSuccess(response: response));
       } catch (error) {

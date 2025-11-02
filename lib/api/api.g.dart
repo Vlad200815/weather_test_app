@@ -47,7 +47,7 @@ class _WeatherApiClient implements WeatherApiClient {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/v1/forecast',
+            'forecast',
             queryParameters: queryParameters,
             data: _data,
           )

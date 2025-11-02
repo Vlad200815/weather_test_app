@@ -5,8 +5,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:weather_test_app/api/api.dart';
 import 'package:weather_test_app/bloc/collapsed_cubit/collapsed_cubit.dart';
 import 'package:weather_test_app/bloc/get_city_and_country_cubit/get_city_and_country_cubit.dart';
+import 'package:weather_test_app/bloc/location_cubit/location_cubit.dart';
 import 'package:weather_test_app/bloc/weather_api_bloc/weather_api_bloc.dart';
+import 'package:weather_test_app/bloc/weather_con_and_img_bloc/weather_con_and_img_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
+import 'package:weather_test_app/services/location_service.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
 import 'package:weather_test_app/theme/theme.dart';
 import "package:weather_test_app/router/rounter.dart";
@@ -21,6 +24,8 @@ Future<void> main() async {
   ]);
   await dotenv.load(fileName: ".env");
   setupDependencies();
+
+  await getIt<LocationService>().determinePosition();
 
   final apiUrl = dotenv.env["API_URL"];
   final client = WeatherApiClient.create(apiUrl: apiUrl);
@@ -45,16 +50,31 @@ class MyApp extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         getIt<Responsiveness>().init(constraints);
+        // final LocationCubit locationCubit = context.read<LocationCubit>();
         return MultiBlocProvider(
           providers: [
+            BlocProvider(
+              create: (context) =>
+                  LocationCubit(locationService: getIt<LocationService>())
+                    ..loadLocation(),
+            ),
             BlocProvider(
               create: (context) => WeatherApiBloc(apiClient: client),
             ),
             BlocProvider(
-              create: (context) =>
-                  GetCityAndCountryCubit()..getCityAndCountry(),
+              create: (context) => GetCityAndCountryCubit(
+                locationCubit: context.read<LocationCubit>(),
+                locationService: getIt<LocationService>(),
+              ),
             ),
             BlocProvider(create: (context) => CollapsedCubit()),
+
+            BlocProvider(
+              create: (context) => WeatherConAndImgBloc(
+                apiClient: client,
+                locationCubit: context.read<LocationCubit>(),
+              ),
+            ),
           ],
           child: MaterialApp.router(
             debugShowCheckedModeBanner: false,

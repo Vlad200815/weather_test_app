@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:weather_test_app/bloc/collapsed_cubit/collapsed_cubit.dart';
 import 'package:weather_test_app/bloc/get_city_and_country_cubit/get_city_and_country_cubit.dart';
+import 'package:weather_test_app/bloc/weather_con_and_img_bloc/weather_con_and_img_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
 import 'package:weather_test_app/main.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
@@ -126,28 +127,55 @@ class PosterAppBar extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            height: 107 * scale,
-                                            // width: 80.25 * scale,
-                                            width: 70.25 * scale,
-                                            child: Image.asset(
-                                              "assets/weather_types/cloud_and_sun.png",
-                                              filterQuality: FilterQuality.high,
-                                            ),
-                                          ),
-                                          Text(
-                                            "weather",
-                                            style: theme.textTheme.titleLarge,
-                                          ).tr(
-                                            namedArgs: {"weather": "Cloudy"},
-                                          ),
-                                        ],
+                                      BlocBuilder<
+                                        WeatherConAndImgBloc,
+                                        WeatherConAndImgState
+                                      >(
+                                        builder: (context, state) {
+                                          if (state
+                                              is WeatherConAndImgSuccess) {
+                                            return Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  height: 107 * scale,
+                                                  // width: 80.25 * scale,
+                                                  width: 70.25 * scale,
+                                                  child: Image.asset(
+                                                    state.weatherTypeImgPath,
+                                                    filterQuality:
+                                                        FilterQuality.high,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  state.weatherType,
+                                                  style: theme
+                                                      .textTheme
+                                                      .titleLarge,
+                                                ).tr(
+                                                  namedArgs: {
+                                                    "weather": "Cloudy",
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          } else if (state
+                                              is WeatherConAndImgFailure) {
+                                            return Center(
+                                              child: Text(
+                                                state.error.toString(),
+                                              ),
+                                            );
+                                          } else {
+                                            return Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            );
+                                          }
+                                        },
                                       ),
                                     ],
                                   ),
