@@ -1,7 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:weather_test_app/bloc/current_tem_and_feels_like/current_tem_and_feels_like_bloc.dart';
+import 'package:weather_test_app/bloc/weather_con_and_img_bloc/weather_con_and_img_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
 import 'package:weather_test_app/theme/app_colors.dart';
@@ -62,28 +65,61 @@ class _ChangeAppBarState extends State<ChangeAppBar> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      height: 60 * scale,
-                      child: Text(
-                        "weather",
-                        style: theme.textTheme.displayMedium,
-                      ).tr(namedArgs: {"weather": "3°"}),
-                    ),
-                    Text(
-                      "feels_like",
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        color: AppColors.black,
-                      ),
-                    ).tr(namedArgs: {"feels_like_degrees": "-2"}),
-                  ],
+                BlocBuilder<
+                  CurrentTemAndFeelsLikeBloc,
+                  CurrentTemAndFeelsLikeState
+                >(
+                  builder: (context, state) {
+                    if (state is CurrentTemAndFeelsLikeSuccess) {
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            height: 60 * scale,
+                            child:
+                                Text(
+                                  "weather",
+                                  style: theme.textTheme.displayMedium,
+                                ).tr(
+                                  namedArgs: {
+                                    "weather": "${state.currentTem.round()}°",
+                                  },
+                                ),
+                          ),
+                          Text(
+                            "feels_like",
+                            style: theme.textTheme.titleSmall?.copyWith(
+                              color: AppColors.black,
+                            ),
+                          ).tr(
+                            namedArgs: {
+                              "feels_like_degrees":
+                                  "${state.feelsLike.round()}°",
+                            },
+                          ),
+                        ],
+                      );
+                    } else if (state is CurrentTemAndFeelsLikeFailure) {
+                      return Center(child: Text(state.error.toString()));
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  },
                 ),
-                SizedBox(
-                  height: 59 * scale,
-                  width: 59 * scale,
-                  child: Image.asset("assets/weather_types/cloud_and_sun.png"),
+                BlocBuilder<WeatherConAndImgBloc, WeatherConAndImgState>(
+                  builder: (context, state) {
+                    if (state is WeatherConAndImgSuccess) {
+                      return SizedBox(
+                        height: 59 * scale,
+                        width: 59 * scale,
+                        child: Image.asset(state.weatherTypeImgPath),
+                      );
+                    } else if (state is WeatherConAndImgFailure) {
+                      return Center(child: Text(state.error.toString()));
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  },
                 ),
               ],
             ),

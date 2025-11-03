@@ -70,6 +70,9 @@ dependencies:
   geolocator: ^14.0.2
   geocoding: ^4.0.0
 
+  #Time
+  intl: ^0.20.2
+
   #ENV
   flutter_dotenv: ^6.0.0
 

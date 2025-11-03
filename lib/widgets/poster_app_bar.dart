@@ -6,7 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:weather_test_app/bloc/collapsed_cubit/collapsed_cubit.dart';
+import 'package:weather_test_app/bloc/current_tem_and_feels_like/current_tem_and_feels_like_bloc.dart';
+import 'package:weather_test_app/bloc/date_bloc/date_bloc.dart';
 import 'package:weather_test_app/bloc/get_city_and_country_cubit/get_city_and_country_cubit.dart';
+import 'package:weather_test_app/bloc/average_day_and_night_temp_bloc/average_day_and_night_temp_bloc.dart';
 import 'package:weather_test_app/bloc/weather_con_and_img_bloc/weather_con_and_img_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
 import 'package:weather_test_app/main.dart';
@@ -103,29 +106,66 @@ class PosterAppBar extends StatelessWidget {
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          SizedBox(
-                                            height: 96 * scale,
-                                            child: Text(
-                                              "degrees",
-                                              style:
-                                                  theme.textTheme.displayLarge,
-                                            ).tr(namedArgs: {"degrees": "3"}),
-                                          ),
-                                          Text(
-                                            "feels_like",
-                                            style: theme.textTheme.titleSmall,
-                                          ).tr(
-                                            namedArgs: {
-                                              "feels_like_degrees": "-2",
-                                            },
-                                          ),
-                                        ],
+                                      BlocBuilder<
+                                        CurrentTemAndFeelsLikeBloc,
+                                        CurrentTemAndFeelsLikeState
+                                      >(
+                                        builder: (context, state) {
+                                          if (state
+                                              is CurrentTemAndFeelsLikeSuccess) {
+                                            return Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                SizedBox(
+                                                  height: 96 * scale,
+                                                  child:
+                                                      Text(
+                                                        "degrees",
+                                                        style: theme
+                                                            .textTheme
+                                                            .displayLarge,
+                                                      ).tr(
+                                                        namedArgs: {
+                                                          "degrees": state
+                                                              .currentTem
+                                                              .round()
+                                                              .toString(),
+                                                        },
+                                                      ),
+                                                ),
+                                                Text(
+                                                  "feels_like",
+                                                  style: theme
+                                                      .textTheme
+                                                      .titleSmall
+                                                      ?.copyWith(fontSize: 12),
+                                                ).tr(
+                                                  namedArgs: {
+                                                    "feels_like_degrees": state
+                                                        .feelsLike
+                                                        .round()
+                                                        .toString(),
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          } else if (state
+                                              is CurrentTemAndFeelsLikeFailure) {
+                                            return Center(
+                                              child: Text(
+                                                state.error.toString(),
+                                              ),
+                                            );
+                                          } else {
+                                            return Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            );
+                                          }
+                                        },
                                       ),
                                       BlocBuilder<
                                         WeatherConAndImgBloc,
@@ -187,42 +227,94 @@ class PosterAppBar extends StatelessWidget {
                                   children: [
                                     Row(
                                       children: [
-                                        Text(
-                                          "date",
-                                          style: theme.textTheme.titleSmall,
-                                        ).tr(
-                                          namedArgs: {
-                                            "month": "January",
-                                            "day": "18",
-                                            "time": "16:14",
+                                        BlocBuilder<DateBloc, DateState>(
+                                          builder: (context, state) {
+                                            if (state is DateSuccess) {
+                                              return Text(
+                                                "date",
+                                                style:
+                                                    theme.textTheme.titleSmall,
+                                              ).tr(
+                                                namedArgs: {
+                                                  "month": state.month,
+                                                  "day": state.day,
+                                                  "time": state.time,
+                                                },
+                                              );
+                                            } else if (state is DateFailure) {
+                                              return Center(
+                                                child: Text(
+                                                  state.error.toString(),
+                                                ),
+                                              );
+                                            } else {
+                                              return Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              );
+                                            }
                                           },
                                         ),
                                       ],
                                     ),
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          "day",
-                                          style: theme.textTheme.titleSmall
-                                              ?.copyWith(
-                                                fontWeight: FontWeight.w700,
+                                    BlocBuilder<
+                                      AverageDayAndNightTempBloc,
+                                      AverageDayAndNightTempState
+                                    >(
+                                      builder: (context, state) {
+                                        if (state
+                                            is AverageDayAndNightSuccess) {
+                                          return Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                "day",
+                                                style: theme
+                                                    .textTheme
+                                                    .titleSmall
+                                                    ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
+                                              ).tr(
+                                                namedArgs: {
+                                                  "day_average_tem": state
+                                                      .averageDayTemp
+                                                      .round()
+                                                      .toString(),
+                                                },
                                               ),
-                                        ).tr(
-                                          namedArgs: {"day_average_tem": "3"},
-                                        ),
-                                        Text(
-                                          "night",
-                                          style: theme.textTheme.titleSmall
-                                              ?.copyWith(
-                                                fontWeight: FontWeight.w700,
+                                              Text(
+                                                "night",
+                                                style: theme
+                                                    .textTheme
+                                                    .titleSmall
+                                                    ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
+                                              ).tr(
+                                                namedArgs: {
+                                                  "night_average_tem": state
+                                                      .averageNightTemp
+                                                      .round()
+                                                      .toString(),
+                                                },
                                               ),
-                                        ).tr(
-                                          namedArgs: {
-                                            "night_average_tem": "-1",
-                                          },
-                                        ),
-                                      ],
+                                            ],
+                                          );
+                                        } else if (state
+                                            is AverageDayAndNightFailure) {
+                                          return Center(
+                                            child: Text(e.toString()),
+                                          );
+                                        } else {
+                                          return Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        }
+                                      },
                                     ),
                                   ],
                                 ),

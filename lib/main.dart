@@ -4,9 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:weather_test_app/api/api.dart';
 import 'package:weather_test_app/bloc/collapsed_cubit/collapsed_cubit.dart';
+import 'package:weather_test_app/bloc/current_tem_and_feels_like/current_tem_and_feels_like_bloc.dart';
+import 'package:weather_test_app/bloc/date_bloc/date_bloc.dart';
 import 'package:weather_test_app/bloc/get_city_and_country_cubit/get_city_and_country_cubit.dart';
+import 'package:weather_test_app/bloc/get_info_boxes_data_bloc/get_info_boxes_data_bloc.dart';
 import 'package:weather_test_app/bloc/location_cubit/location_cubit.dart';
-import 'package:weather_test_app/bloc/weather_api_bloc/weather_api_bloc.dart';
+import 'package:weather_test_app/bloc/average_day_and_night_temp_bloc/average_day_and_night_temp_bloc.dart';
 import 'package:weather_test_app/bloc/weather_con_and_img_bloc/weather_con_and_img_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
 import 'package:weather_test_app/services/location_service.dart';
@@ -58,9 +61,7 @@ class MyApp extends StatelessWidget {
                   LocationCubit(locationService: getIt<LocationService>())
                     ..loadLocation(),
             ),
-            BlocProvider(
-              create: (context) => WeatherApiBloc(apiClient: client),
-            ),
+
             BlocProvider(
               create: (context) => GetCityAndCountryCubit(
                 locationCubit: context.read<LocationCubit>(),
@@ -68,9 +69,32 @@ class MyApp extends StatelessWidget {
               ),
             ),
             BlocProvider(create: (context) => CollapsedCubit()),
-
             BlocProvider(
               create: (context) => WeatherConAndImgBloc(
+                apiClient: client,
+                locationCubit: context.read<LocationCubit>(),
+              ),
+            ),
+            BlocProvider(
+              create: (context) => CurrentTemAndFeelsLikeBloc(
+                apiClient: client,
+                locationCubit: context.read<LocationCubit>(),
+              ),
+            ),
+            BlocProvider(
+              create: (context) => AverageDayAndNightTempBloc(
+                apiClient: client,
+                locationCubit: context.read<LocationCubit>(),
+              ),
+            ),
+            BlocProvider(
+              create: (context) => DateBloc(
+                apiClient: client,
+                locationCubit: context.read<LocationCubit>(),
+              ),
+            ),
+            BlocProvider(
+              create: (context) => GetInfoBoxesDataBloc(
                 apiClient: client,
                 locationCubit: context.read<LocationCubit>(),
               ),
