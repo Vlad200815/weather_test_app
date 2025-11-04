@@ -1,7 +1,14 @@
 {   
     "city_country": "{city}, {country}",
-    "weather": "{weather}",
+    "weather": "{weather}°",
     "degrees": "{degrees}°",
+
+    "clear": "Clear",
+    "cloudy": "Cloudy",
+    "fog": "Fog",
+    "rain": "Rain",
+    "snow": "Snow",
+    "thunder": "Thunder",
      
 
     "day": "Day {day_average_tem}°",

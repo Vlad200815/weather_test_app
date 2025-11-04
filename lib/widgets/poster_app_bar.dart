@@ -1,9 +1,7 @@
 import 'dart:math';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:weather_test_app/bloc/collapsed_cubit/collapsed_cubit.dart';
 import 'package:weather_test_app/bloc/current_tem_and_feels_like/current_tem_and_feels_like_bloc.dart';
@@ -12,7 +10,6 @@ import 'package:weather_test_app/bloc/get_city_and_country_cubit/get_city_and_co
 import 'package:weather_test_app/bloc/average_day_and_night_temp_bloc/average_day_and_night_temp_bloc.dart';
 import 'package:weather_test_app/bloc/weather_con_and_img_bloc/weather_con_and_img_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
-import 'package:weather_test_app/main.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
 import 'package:weather_test_app/theme/app_colors.dart';
 import 'package:weather_test_app/widgets/change_app_bar.dart';
@@ -138,10 +135,21 @@ class PosterAppBar extends StatelessWidget {
                                                 ),
                                                 Text(
                                                   "feels_like",
-                                                  style: theme
-                                                      .textTheme
-                                                      .titleSmall
-                                                      ?.copyWith(fontSize: 12),
+                                                  style:
+                                                      state.currentTem
+                                                              .toInt()
+                                                              .toString()
+                                                              .length >
+                                                          1
+                                                      ? theme
+                                                            .textTheme
+                                                            .titleSmall
+                                                            ?.copyWith(
+                                                              fontSize: 12,
+                                                            )
+                                                      : theme
+                                                            .textTheme
+                                                            .titleSmall,
                                                 ).tr(
                                                   namedArgs: {
                                                     "feels_like_degrees": state
@@ -176,14 +184,13 @@ class PosterAppBar extends StatelessWidget {
                                               is WeatherConAndImgSuccess) {
                                             return Column(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.start,
+                                                  MainAxisAlignment.center,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
                                                 SizedBox(
                                                   height: 107 * scale,
-                                                  // width: 80.25 * scale,
-                                                  width: 70.25 * scale,
+                                                  width: 80 * scale,
                                                   child: Image.asset(
                                                     state.weatherTypeImgPath,
                                                     filterQuality:
@@ -197,7 +204,8 @@ class PosterAppBar extends StatelessWidget {
                                                       .titleLarge,
                                                 ).tr(
                                                   namedArgs: {
-                                                    "weather": "Cloudy",
+                                                    "weather":
+                                                        state.weatherType,
                                                   },
                                                 ),
                                               ],

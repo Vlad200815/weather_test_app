@@ -1,7 +1,14 @@
 {   
     "city_country": "{city}, {country}",
-    "weather": "{weather}",
+    "weather": "{weather}°",
     "degrees": "{degrees}°",
+
+    "clear": "Ясно",
+    "cloudy": "Хмарно",
+    "fog": "Туман",
+    "rain": "Дощ",
+    "snow": "Сніг",
+    "thunder": "Гроза",
 
     "day": "День {day_average_tem}°",
     "night": "Ніч {night_average_tem}°",

@@ -8,10 +8,12 @@ import 'package:weather_test_app/bloc/current_tem_and_feels_like/current_tem_and
 import 'package:weather_test_app/bloc/date_bloc/date_bloc.dart';
 import 'package:weather_test_app/bloc/get_city_and_country_cubit/get_city_and_country_cubit.dart';
 import 'package:weather_test_app/bloc/get_info_boxes_data_bloc/get_info_boxes_data_bloc.dart';
+import 'package:weather_test_app/bloc/get_ten_days_weather_bloc/get_ten_day_weather_bloc.dart';
 import 'package:weather_test_app/bloc/location_cubit/location_cubit.dart';
 import 'package:weather_test_app/bloc/average_day_and_night_temp_bloc/average_day_and_night_temp_bloc.dart';
 import 'package:weather_test_app/bloc/weather_con_and_img_bloc/weather_con_and_img_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
+import 'package:weather_test_app/services/determine_weather_condition.dart';
 import 'package:weather_test_app/services/location_service.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
 import 'package:weather_test_app/theme/theme.dart';
@@ -61,7 +63,6 @@ class MyApp extends StatelessWidget {
                   LocationCubit(locationService: getIt<LocationService>())
                     ..loadLocation(),
             ),
-
             BlocProvider(
               create: (context) => GetCityAndCountryCubit(
                 locationCubit: context.read<LocationCubit>(),
@@ -73,6 +74,7 @@ class MyApp extends StatelessWidget {
               create: (context) => WeatherConAndImgBloc(
                 apiClient: client,
                 locationCubit: context.read<LocationCubit>(),
+                determineWeatherCondition: getIt<DetermineWeatherCondition>(),
               ),
             ),
             BlocProvider(
@@ -97,6 +99,14 @@ class MyApp extends StatelessWidget {
               create: (context) => GetInfoBoxesDataBloc(
                 apiClient: client,
                 locationCubit: context.read<LocationCubit>(),
+              ),
+            ),
+
+            BlocProvider(
+              create: (context) => GetTenDayWeatherBloc(
+                apiClient: client,
+                locationCubit: context.read<LocationCubit>(),
+                determineWeatherCondition: getIt<DetermineWeatherCondition>(),
               ),
             ),
           ],

@@ -6,14 +6,18 @@ import 'package:intl/intl.dart';
 import 'package:weather_test_app/api/api.dart';
 import 'package:weather_test_app/api/models/weather_response_model.dart';
 import 'package:weather_test_app/bloc/location_cubit/location_cubit.dart';
+import 'package:weather_test_app/services/determine_weather_condition.dart';
 
 part 'get_ten_day_weather_event.dart';
 part 'get_ten_day_weather_state.dart';
 
 class GetTenDayWeatherBloc
     extends Bloc<GetTenDayWeatherEvent, GetTenDayWeatherState> {
-  GetTenDayWeatherBloc({required this.apiClient, required this.locationCubit})
-    : super(GetTenDayWeatherInitial()) {
+  GetTenDayWeatherBloc({
+    required this.apiClient,
+    required this.locationCubit,
+    required this.determineWeatherCondition,
+  }) : super(GetTenDayWeatherInitial()) {
     //listen to locationCubit changes
     //TODO: check if it takes a lot of time to load in the start
     locationCubit.stream.listen((event) {
@@ -41,23 +45,48 @@ class GetTenDayWeatherBloc
           // current: "temperature_2m,weather_code",
         );
 
-        //TODO: work is here already have weeksDays but don't want to repeat yourself
-        //TODO: so try to make it as a sevice!!!
-        //TODO: this bloc is for the ten days screen!!!
-        // List<String> weekDays = responseModel.daily.time
-        //     .map((e) => capitalize(DateFormat("EEEE").format(DateTime.parse(e))))
-        //     .toList();
-        // List<String>
+        log("---------------------------------------");
+        List<String> weekDays = responseModel.daily.time
+            .map(
+              (e) => capitalize(
+                DateFormat("EEEE,MMMM,d").format(DateTime.parse(e)),
+              ),
+            )
+            .toList();
+        log("WeekDays: $weekDays");
+        List<String> weatherConditions = responseModel.daily.weatherCode
+            .map(
+              (e) => determineWeatherCondition.weatherConditionDetermine(
+                weatherCode: e,
+              )["weatherConditon"]!,
+            )
+            .toList();
+        log("Weather condition: $weatherConditions");
+        List<double> temps = responseModel.daily.temMax;
 
-        // emit(
-        //   OnGetTenDayWeatherSuccess(
-        //     weekDays: weekDays,
-        //     weatherConditions: weatherCondition,
-        //     tems: tem,
-        //     feelsLikes: feelsLike,
-        //     weahterConImgPaths: weahterConImgPath,
-        //   ),
-        // );
+        log("Temps: $temps");
+        List<double> feelsLikes = responseModel.daily.temMin;
+
+        log("FeelsLikes: $feelsLikes");
+        List<String> weatherConImgPaths = responseModel.daily.weatherCode
+            .map(
+              (e) => determineWeatherCondition.weatherConditionDetermine(
+                weatherCode: e,
+              )["weatherConditionImgPath"]!,
+            )
+            .toList();
+        log("WeatherConImgPath $weatherConImgPaths");
+        log("---------------------------------------");
+
+        emit(
+          OnGetTenDayWeatherSuccess(
+            weekDays: weekDays,
+            weatherConditions: weatherConditions,
+            temps: temps,
+            feelsLikes: feelsLikes,
+            weahterConImgPaths: weatherConImgPaths,
+          ),
+        );
       } catch (e) {
         log(e.toString());
         emit(OnGetTenDayWeatherFailure(error: e));
@@ -72,4 +101,5 @@ class GetTenDayWeatherBloc
 
   final WeatherApiClient apiClient;
   final LocationCubit locationCubit;
+  final DetermineWeatherCondition determineWeatherCondition;
 }

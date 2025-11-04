@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:weather_test_app/bloc/current_tem_and_feels_like/current_tem_and_feels_like_bloc.dart';
+import 'package:weather_test_app/bloc/get_city_and_country_cubit/get_city_and_country_cubit.dart';
 import 'package:weather_test_app/bloc/weather_con_and_img_bloc/weather_con_and_img_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
@@ -49,22 +50,40 @@ class _SmallerAppBarState extends State<SmallerAppBar> {
             child: Column(
               children: [
                 SizedBox(height: 10 * scale),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "city_country",
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        color: AppColors.black,
-                      ),
-                    ).tr(namedArgs: {"city": "Lutsk", "country": "Ukraine"}),
-                    IconButton(
-                      onPressed: () {
-                        context.go("/search");
-                      },
-                      icon: Icon(Icons.search_rounded, color: AppColors.black),
-                    ),
-                  ],
+                BlocBuilder<GetCityAndCountryCubit, GetCityAndCountryState>(
+                  builder: (context, state) {
+                    if (state is GetCityAndCountrySuccess) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "city_country",
+                            style: theme.textTheme.titleLarge?.copyWith(
+                              color: AppColors.black,
+                            ),
+                          ).tr(
+                            namedArgs: {
+                              "city": state.city,
+                              "country": state.country,
+                            },
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              context.go("/search");
+                            },
+                            icon: Icon(
+                              Icons.search_rounded,
+                              color: AppColors.black,
+                            ),
+                          ),
+                        ],
+                      );
+                    } else if (state is GetCityAndCountryFailure) {
+                      return Center(child: Text(state.error.toString()));
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  },
                 ),
                 // SizedBox(height: 10 * scale),
                 Row(
@@ -88,7 +107,7 @@ class _SmallerAppBarState extends State<SmallerAppBar> {
                                     ).tr(
                                       namedArgs: {
                                         "weather":
-                                            "${state.currentTem.round()}°",
+                                            "${state.currentTem.round()}",
                                       },
                                     ),
                               ),
@@ -100,7 +119,7 @@ class _SmallerAppBarState extends State<SmallerAppBar> {
                               ).tr(
                                 namedArgs: {
                                   "feels_like_degrees":
-                                      "${state.feelsLike.round()}°",
+                                      "${state.feelsLike.round()}",
                                 },
                               ),
                             ],
