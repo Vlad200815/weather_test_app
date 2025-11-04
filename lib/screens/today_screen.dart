@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_test_app/bloc/collapsed_cubit/collapsed_cubit.dart';
 import 'package:weather_test_app/di/di.dart';
-import 'package:weather_test_app/main.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
 import '../widgets/widgets.dart';
 

@@ -8,13 +8,13 @@ part 'api.g.dart';
 abstract class WeatherApiClient {
   factory WeatherApiClient(Dio dio, {String? baseUrl}) = _WeatherApiClient;
 
-  factory WeatherApiClient.create({String? apiUrl}) {
-    final dio = Dio();
-    if (apiUrl != null) {
-      return WeatherApiClient(dio, baseUrl: apiUrl);
-    }
-    return WeatherApiClient(dio);
-  }
+  // factory WeatherApiClient.create({String? apiUrl}) {
+  //   final dio = Dio();
+  //   if (apiUrl != null) {
+  //     return WeatherApiClient(dio, baseUrl: apiUrl);
+  //   }
+  //   return WeatherApiClient(dio);
+  // }
 
   @GET('forecast')
   Future<WeatherResponseModel> getWeather({
