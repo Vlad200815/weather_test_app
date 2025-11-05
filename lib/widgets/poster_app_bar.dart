@@ -93,7 +93,7 @@ class PosterAppBar extends StatelessWidget {
                                         is GetCityAndCountryFailure) {
                                       return Text("Error: ${state.error}");
                                     } else {
-                                      return SizedBox();
+                                      return SizedBox(height: 40 * scale);
                                     }
                                   },
                                 ),

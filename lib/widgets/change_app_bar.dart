@@ -76,7 +76,7 @@ class _ChangeAppBarState extends State<ChangeAppBar> {
                 } else if (state is GetCityAndCountryFailure) {
                   return Center(child: Text(state.error.toString()));
                 } else {
-                  return Center(child: CircularProgressIndicator());
+                  return SizedBox();
                 }
               },
             ),

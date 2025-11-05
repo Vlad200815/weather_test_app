@@ -81,7 +81,7 @@ class _SmallerAppBarState extends State<SmallerAppBar> {
                     } else if (state is GetCityAndCountryFailure) {
                       return Center(child: Text(state.error.toString()));
                     } else {
-                      return Center(child: CircularProgressIndicator());
+                      return SizedBox();
                     }
                   },
                 ),
@@ -127,7 +127,7 @@ class _SmallerAppBarState extends State<SmallerAppBar> {
                         } else if (state is CurrentTemAndFeelsLikeFailure) {
                           return Center(child: Text(state.error.toString()));
                         } else {
-                          return Center(child: CircularProgressIndicator());
+                          return SizedBox();
                         }
                       },
                     ),
