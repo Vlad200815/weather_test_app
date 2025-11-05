@@ -72,5 +72,4 @@ class FontSizes {
   static const double _labelLargeFontSize = 16;
   static const double _labelMediumFontSize = 12;
   static const double _labelSmallFontSize = 11;
-  static const double _labelMicroFontSize = 10;
 }

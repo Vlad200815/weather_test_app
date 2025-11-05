@@ -23,7 +23,8 @@ abstract class WeatherApiClient {
     @Query("daily")
     String daily =
         "weather_code,sunrise,sunset,uv_index_max,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
-    @Query("hourly") String hourly = "temperature_2m,weather_code",
+    @Query("hourly")
+    String hourly = "temperature_2m,weather_code,precipitation_probability",
     @Query("current")
     String current =
         "temperature_2m,apparent_temperature,wind_speed_10m,weather_code,surface_pressure",

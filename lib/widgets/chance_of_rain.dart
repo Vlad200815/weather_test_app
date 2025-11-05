@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:weather_test_app/bloc/rain_probability_bloc/rain_probability_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
 import 'package:weather_test_app/theme/app_colors.dart';
@@ -30,34 +32,70 @@ class ChanceOfRain extends StatelessWidget {
               horizontal: 10 * scale,
               vertical: 12 * scale,
             ),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      height: 28 * scale,
-                      width: 28 * scale,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.white,
+            child: BlocBuilder<RainProbabilityBloc, RainProbabilityState>(
+              builder: (context, state) {
+                if (state is RainProbabilitySuccess) {
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: 28 * scale,
+                            width: 28 * scale,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.white,
+                            ),
+                            child: Center(
+                              child: SvgPicture.asset(
+                                "assets/icons/rain_chance.svg",
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 8 * scale),
+                          Text(
+                            "chance_of_rain",
+                            style: theme.textTheme.labelMedium,
+                          ).tr(),
+                        ],
                       ),
-                      child: Center(
-                        child: SvgPicture.asset("assets/icons/rain_chance.svg"),
+                      SizedBox(height: 10 * scale),
+                      ChanceRainProress(
+                        date: state.dates[0],
+                        percent: state.percents[0],
+                        progress: state.percents[0] != 0
+                            ? state.percents[0] / 100
+                            : state.percents[0].toDouble(),
                       ),
-                    ),
-                    SizedBox(width: 8 * scale),
-                    Text(
-                      "chance_of_rain",
-                      style: theme.textTheme.labelMedium,
-                    ).tr(),
-                  ],
-                ),
-                SizedBox(height: 10 * scale),
-                ChanceRainProress(date: "7 PM", percent: 27, progress: 0.27),
-                ChanceRainProress(date: "8 PM", percent: 44, progress: 0.44),
-                ChanceRainProress(date: "9 PM", percent: 56, progress: 0.56),
-                ChanceRainProress(date: "10 PM", percent: 88, progress: 0.88),
-              ],
+                      ChanceRainProress(
+                        date: state.dates[1],
+                        percent: state.percents[1],
+                        progress: state.percents[1] != 0
+                            ? state.percents[1] / 100
+                            : state.percents[1].toDouble(),
+                      ),
+                      ChanceRainProress(
+                        date: state.dates[2],
+                        percent: state.percents[2],
+                        progress: state.percents[2] != 0
+                            ? state.percents[2] / 100
+                            : state.percents[2].toDouble(),
+                      ),
+                      ChanceRainProress(
+                        date: state.dates[3],
+                        percent: state.percents[3],
+                        progress: state.percents[3] != 0
+                            ? state.percents[3] / 100
+                            : state.percents[3].toDouble(),
+                      ),
+                    ],
+                  );
+                } else if (state is RainProbabilityFailure) {
+                  return Center(child: Text(state.error.toString()));
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
             ),
           ),
         ),

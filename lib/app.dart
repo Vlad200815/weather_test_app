@@ -9,7 +9,10 @@ import 'package:weather_test_app/bloc/get_city_and_country_cubit/get_city_and_co
 import 'package:weather_test_app/bloc/get_info_boxes_data_bloc/get_info_boxes_data_bloc.dart';
 import 'package:weather_test_app/bloc/get_ten_days_weather_bloc/get_ten_day_weather_bloc.dart';
 import 'package:weather_test_app/bloc/location_cubit/location_cubit.dart';
+import 'package:weather_test_app/bloc/rain_probability_bloc/rain_probability_bloc.dart';
+import 'package:weather_test_app/bloc/sunrise_and_sunset_bloc/sunrise_and_sunset_bloc.dart';
 import 'package:weather_test_app/bloc/weather_con_and_img_bloc/weather_con_and_img_bloc.dart';
+import 'package:weather_test_app/bloc/weather_forecast_bloc/weather_forecast_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
 import 'package:weather_test_app/router/rounter.dart';
 import 'package:weather_test_app/services/determine_weather_condition.dart';
@@ -55,6 +58,14 @@ class MyWeatherApp extends StatelessWidget {
             BlocProvider(create: (context) => GetInfoBoxesDataBloc()),
             BlocProvider(
               create: (context) => GetTenDayWeatherBloc(
+                determineWeatherCondition: determineWeatherCondition,
+              ),
+            ),
+            BlocProvider(create: (context) => SunriseAndSunsetBloc()),
+            BlocProvider(create: (context) => RainProbabilityBloc()),
+
+            BlocProvider(
+              create: (context) => WeatherForecastBloc(
                 determineWeatherCondition: determineWeatherCondition,
               ),
             ),

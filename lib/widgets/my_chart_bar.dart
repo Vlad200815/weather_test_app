@@ -31,7 +31,6 @@ class _MyChartLineState extends State<MyChartLine> {
     ];
 
     const todayIndex = 3;
-    final todaySpot = spots[todayIndex];
 
     return Padding(
       padding: EdgeInsets.only(left: 10 * scale, right: 10 * scale),

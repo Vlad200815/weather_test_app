@@ -1,9 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:weather_test_app/bloc/weather_forecast_bloc/weather_forecast_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
-import 'package:weather_test_app/theme/app_colors.dart';
 import 'package:weather_test_app/widgets/weather_box.dart';
 
 class HourlyForecastPanel extends StatelessWidget {
@@ -54,40 +55,50 @@ class HourlyForecastPanel extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 10 * scale),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    WeatherBox(
-                      weatherImgPath: "assets/weather_types/cloud_and_sun.png",
-                      time: "now".tr(),
-                      degrees: 10,
-                    ),
-                    WeatherBox(
-                      weatherImgPath: "assets/weather_types/cloud_and_sun.png",
-                      time: "now".tr(),
-                      degrees: 10,
-                    ),
-                    WeatherBox(
-                      weatherImgPath: "assets/weather_types/cloud_and_sun.png",
-                      time: "now".tr(),
-                      degrees: 10,
-                    ),
-                    WeatherBox(
-                      weatherImgPath: "assets/weather_types/cloud_and_sun.png",
-                      time: "now".tr(),
-                      degrees: 10,
-                    ),
-                    WeatherBox(
-                      weatherImgPath: "assets/weather_types/cloud_and_sun.png",
-                      time: "now".tr(),
-                      degrees: 10,
-                    ),
-                    WeatherBox(
-                      weatherImgPath: "assets/weather_types/cloud_and_sun.png",
-                      time: "now".tr(),
-                      degrees: 10,
-                    ),
-                  ],
+                BlocBuilder<WeatherForecastBloc, WeatherForecastState>(
+                  builder: (context, state) {
+                    if (state is WeatherForecastSuccess) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          WeatherBox(
+                            weatherImgPath: state.weatherConImgPaths[0],
+                            time: "now".tr(),
+                            degrees: state.temps[0],
+                          ),
+                          WeatherBox(
+                            weatherImgPath: state.weatherConImgPaths[1],
+                            time: state.times[1],
+                            degrees: state.temps[1],
+                          ),
+                          WeatherBox(
+                            weatherImgPath: state.weatherConImgPaths[2],
+                            time: state.times[2],
+                            degrees: state.temps[2],
+                          ),
+                          WeatherBox(
+                            weatherImgPath: state.weatherConImgPaths[3],
+                            time: state.times[3],
+                            degrees: state.temps[3],
+                          ),
+                          WeatherBox(
+                            weatherImgPath: state.weatherConImgPaths[4],
+                            time: state.times[4],
+                            degrees: state.temps[4],
+                          ),
+                          WeatherBox(
+                            weatherImgPath: state.weatherConImgPaths[5],
+                            time: state.times[5],
+                            degrees: state.temps[5],
+                          ),
+                        ],
+                      );
+                    } else if (state is WeatherForecastFailure) {
+                      return Center(child: Text(state.error.toString()));
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  },
                 ),
               ],
             ),

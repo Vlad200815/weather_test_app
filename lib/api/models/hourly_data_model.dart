@@ -9,6 +9,8 @@ class HourlyData {
   final List<double> temperature;
   @JsonKey(name: "weather_code")
   final List<int> weatherCode;
+  @JsonKey(name: "precipitation_probability")
+  final List<int> rainChanges;
 
   factory HourlyData.fromJson(Map<String, dynamic> json) =>
       _$HourlyDataFromJson(json);
@@ -19,5 +21,6 @@ class HourlyData {
     required this.time,
     required this.temperature,
     required this.weatherCode,
+    required this.rainChanges,
   });
 }
