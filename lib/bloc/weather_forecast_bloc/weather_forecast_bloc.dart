@@ -33,7 +33,7 @@ class WeatherForecastBloc
           .toList();
       //find current hour or closest
       final index = hourlyTimes.indexWhere(
-        (e) => (e.difference(currentTime).inMinutes.abs() < 30),
+        (e) => (e.difference(currentTime).inMinutes.abs() < 60),
       );
 
       final convertedTimes = hourlyTimes
@@ -41,9 +41,8 @@ class WeatherForecastBloc
           .toList();
 
       List<int> temps = data.hourly.temperature.map((e) => e.toInt()).toList();
-      // List<int> next10Hours = [];
       List<String> dates = [];
-
+      log("dates: $dates");
       List<String> weatherConImgPaths = data.hourly.weatherCode
           .map(
             (e) => determineWeatherCondition.weatherConditionDetermine(
@@ -53,15 +52,18 @@ class WeatherForecastBloc
           .toList();
 
       if (index != -1) {
-        // next4Hours = probabilities.skip(index).take(4).toList();
         dates = convertedTimes.skip(index).take(6).toList();
         temps = temps.skip(index).take(6).toList();
-        weatherConImgPaths.skip(index).take(6).toList();
+        weatherConImgPaths = weatherConImgPaths.skip(index).take(6).toList();
 
         log(
           "Dates: $dates, weatherConImgPaths: $weatherConImgPaths, temps: $temps",
         );
       } else {
+        // fallback to first 6 entries if current hour not found
+        dates = convertedTimes.take(6).toList();
+        temps = temps.take(6).toList();
+        weatherConImgPaths = weatherConImgPaths.take(6).toList();
         log("Current hour not found in hourly data");
       }
 

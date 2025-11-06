@@ -1,6 +1,10 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    // START: FlutterFire Configuration
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
+    // END: FlutterFire Configuration
+    id("org.jetbrains.kotlin.android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
@@ -14,10 +18,13 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+
+        // обов’язково: десуґаринг
+        isCoreLibraryDesugaringEnabled = true
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = "11"
     }
 
     defaultConfig {
@@ -40,6 +47,21 @@ android {
     }
 }
 
+
+
+
 flutter {
     source = "../.."
+}
+
+dependencies {
+    // Додаємо десуґаринг
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+
+    implementation("com.google.firebase:firebase-messaging:24.0.2")
+    implementation("com.google.firebase:firebase-analytics:22.0.2")
 }

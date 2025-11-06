@@ -30,7 +30,7 @@ class RainProbabilityBloc
 
       //find current hour or closest
       final index = hourlyTimes.indexWhere(
-        (e) => (e.difference(currentTime).inMinutes.abs() < 30),
+        (e) => (e.difference(currentTime).inMinutes.abs() < 60),
       );
 
       final convertedTimes = hourlyTimes
@@ -45,6 +45,8 @@ class RainProbabilityBloc
         dates = convertedTimes.skip(index).take(4).toList();
         log("Next 4 hours probabilites: $next4Hours, and dates: $dates");
       } else {
+        next4Hours = probabilities.take(4).toList();
+        dates = convertedTimes.take(4).toList();
         log("Current hour not found in hourly data");
       }
 

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "858124716741",
+    "project_id": "weather-app-c9665",
+    "storage_bucket": "weather-app-c9665.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858124716741:android:21868f24d536b5c05efeac",
+        "android_client_info": {
+          "package_name": "com.dev.vlad.weather_test_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYAXHu3QNuENnDm_aA0X9E08mH5ngqxrE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858124716741:android:11c99cb787515e625efeac",
+        "android_client_info": {
+          "package_name": "com.vlad_dev.weather_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYAXHu3QNuENnDm_aA0X9E08mH5ngqxrE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

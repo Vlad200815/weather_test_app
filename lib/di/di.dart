@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:weather_test_app/api/api.dart';
 import 'package:weather_test_app/services/capitalize.dart';
 import 'package:weather_test_app/services/determine_weather_condition.dart';
 import 'package:weather_test_app/services/location_service.dart';
+import 'package:weather_test_app/services/notification_service.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
 import 'package:weather_test_app/services/weather_api_service.dart';
 
@@ -30,4 +32,5 @@ void setupDependencies() {
   getIt.registerSingleton<DetermineWeatherCondition>(
     DetermineWeatherCondition(),
   );
+  getIt.registerLazySingleton<NotificationService>(() => NotificationService());
 }

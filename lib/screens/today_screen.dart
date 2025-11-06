@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_test_app/bloc/collapsed_cubit/collapsed_cubit.dart';
@@ -18,6 +19,9 @@ class _TodayScreenState extends State<TodayScreen> {
     final scale = getIt<Responsiveness>().scale;
     final theme = Theme.of(context);
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => FirebaseCrashlytics.instance.log("Force Crash"),
+      ),
       backgroundColor: theme.colorScheme.surface,
       body: CustomScrollView(
         slivers: [
