@@ -28,8 +28,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
-final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -44,8 +42,9 @@ Future<void> main() async {
   setupDependencies();
 
   //for analytics
-  analytics.setAnalyticsCollectionEnabled(true);
+  await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
 
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };

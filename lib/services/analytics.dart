@@ -1,19 +1,20 @@
+import 'dart:developer';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 final analytics = FirebaseAnalytics.instance;
 
 class Analytics {
   Future<void> logSelectedPeriod(String period) async {
-    await analytics.logEvent(
-      name: "selected_period",
-      parameters: {"period": period},
-    );
+    analytics.setAnalyticsCollectionEnabled(true);
+    await analytics.logEvent(name: "period", parameters: {"period": period});
+    log("-----------------Period is here $period ---------------");
   }
 
   Future<void> logSelectedCity(String cityName) async {
-    await analytics.logEvent(
-      name: 'selected_city',
-      parameters: {'city': cityName},
-    );
+    analytics.setAnalyticsCollectionEnabled(true);
+
+    await analytics.logEvent(name: 'city', parameters: {'city': cityName});
+    log("-----------------Location is here $cityName---------------");
   }
 }
