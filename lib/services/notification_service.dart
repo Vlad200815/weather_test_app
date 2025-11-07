@@ -74,43 +74,43 @@ class NotificationService {
     });
   }
 
-  Future<void> scheduleDailyWeatherNotification(
-    WeatherResponseModel weather,
-  ) async {
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-      0,
-      'Today’s Weather',
-      'Temperature: ${weather.current.currentTem}°C, ${getIt<DetermineWeatherCondition>().weatherConditionDetermine(weatherCode: weather.current.weatherCode)["weatherConditon"]}',
-      _nextInstanceOf8AM(), // tz.TZDateTime
-      const NotificationDetails(
-        android: AndroidNotificationDetails(
-          'daily_weather_channel',
-          'Daily Weather',
-          channelDescription: 'Daily weather forecast notifications',
-          importance: Importance.max,
-          priority: Priority.high,
-        ),
-      ),
-      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-      matchDateTimeComponents:
-          DateTimeComponents.time, // for daily at same time
-    );
-  }
+  // Future<void> scheduleDailyWeatherNotification(
+  //   WeatherResponseModel weather,
+  // ) async {
+  //   await flutterLocalNotificationsPlugin.zonedSchedule(
+  //     0,
+  //     'Today’s Weather',
+  //     'Temperature: ${weather.current.currentTem}°C, ${getIt<DetermineWeatherCondition>().weatherConditionDetermine(weatherCode: weather.current.weatherCode)["weatherConditon"]}',
+  //     _nextInstanceOf8AM(), // tz.TZDateTime
+  //     const NotificationDetails(
+  //       android: AndroidNotificationDetails(
+  //         'daily_weather_channel',
+  //         'Daily Weather',
+  //         channelDescription: 'Daily weather forecast notifications',
+  //         importance: Importance.max,
+  //         priority: Priority.high,
+  //       ),
+  //     ),
+  //     androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+  //     matchDateTimeComponents:
+  //         DateTimeComponents.time, // for daily at same time
+  //   );
+  // }
 
-  tz.TZDateTime _nextInstanceOf8AM() {
-    final now = tz.TZDateTime.now(tz.local);
-    var scheduledDate = tz.TZDateTime(
-      tz.local,
-      now.year,
-      now.month,
-      now.day,
-      8,
-    );
-    if (scheduledDate.isBefore(now)) {
-      scheduledDate = scheduledDate.add(const Duration(days: 1));
-    }
-    return scheduledDate;
-  }
+  // tz.TZDateTime _nextInstanceOf8AM() {
+  //   final now = tz.TZDateTime.now(tz.local);
+  //   var scheduledDate = tz.TZDateTime(
+  //     tz.local,
+  //     now.year,
+  //     now.month,
+  //     now.day,
+  //     8,
+  //   );
+  //   if (scheduledDate.isBefore(now)) {
+  //     scheduledDate = scheduledDate.add(const Duration(days: 1));
+  //   }
+  //   return scheduledDate;
+  // }
 
   Future<void> showTestNotification() async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =

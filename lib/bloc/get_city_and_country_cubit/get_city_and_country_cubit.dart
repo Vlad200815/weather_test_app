@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:weather_test_app/bloc/location_cubit/location_cubit.dart';
 import 'package:weather_test_app/di/di.dart';
+import 'package:weather_test_app/services/analytics.dart';
 import 'package:weather_test_app/services/location_service.dart';
 
 part 'get_city_and_country_state.dart';
@@ -38,6 +39,9 @@ class GetCityAndCountryCubit extends Cubit<GetCityAndCountryState> {
           .getCityAndCountry(latitude: lat, longitude: lon);
       final String city = location["city"]!;
       final String country = location["country"]!;
+
+      getIt<Analytics>().logSelectedCity(city);
+      log("city name is: $city");
 
       emit(
         GetCityAndCountrySuccess(

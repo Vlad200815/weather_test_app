@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:ui';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -17,7 +18,7 @@ import 'package:weather_test_app/services/notification_service.dart';
 import 'package:weather_test_app/services/weather_api_service.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 
-/// Handles background messages when the app is terminated or in background
+// Handles background messages when the app is terminated or in background
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -26,6 +27,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
+
+final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +42,9 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   setupDependencies();
+
+  //for analytics
+  analytics.setAnalyticsCollectionEnabled(true);
 
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
@@ -68,9 +74,9 @@ Future<void> main() async {
   getIt.registerSingleton<WeatherResponseModel>(weatherData);
 
   await getIt<NotificationService>().setupNotifications();
-  await getIt<NotificationService>().scheduleDailyWeatherNotification(
-    weatherData,
-  );
+  // await getIt<NotificationService>().scheduleDailyWeatherNotification(
+  //   weatherData,
+  // );
 
   runApp(
     EasyLocalization(

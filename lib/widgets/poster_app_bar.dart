@@ -121,9 +121,22 @@ class PosterAppBar extends StatelessWidget {
                                                   child:
                                                       Text(
                                                         "degrees",
-                                                        style: theme
-                                                            .textTheme
-                                                            .displayLarge,
+                                                        style:
+                                                            state.currentTem
+                                                                    .round()
+                                                                    .toString()
+                                                                    .length >
+                                                                1
+                                                            ? theme
+                                                                  .textTheme
+                                                                  .displayLarge
+                                                                  ?.copyWith(
+                                                                    fontSize:
+                                                                        70,
+                                                                  )
+                                                            : theme
+                                                                  .textTheme
+                                                                  .displayLarge,
                                                       ).tr(
                                                         namedArgs: {
                                                           "degrees": state
