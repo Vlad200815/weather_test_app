@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:weather_test_app/bloc/weather_forecast_bloc/weather_forecast_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
+import 'package:weather_test_app/gen/assets.gen.dart';
+import 'package:weather_test_app/generated/lib/generated/locale_keys.g.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
 import 'package:weather_test_app/widgets/weather_box.dart';
 
@@ -43,55 +45,43 @@ class HourlyForecastPanel extends StatelessWidget {
                       height: 28 * scale,
                       decoration: BoxDecoration(shape: BoxShape.circle),
                       child: SvgPicture.asset(
-                        "assets/icons/hourly_forecast.svg",
+                        // "assets/icons/hourly_forecast.svg",
+                        Assets.icons.hourlyForecast,
                         fit: BoxFit.cover,
                       ),
                     ),
                     SizedBox(width: 8 * scale),
                     Text(
-                      "hourly_forecast",
+                      // "hourly_forecast",
+                      LocaleKeys.hourly_forecast.tr(),
                       style: theme.textTheme.labelMedium,
-                    ).tr(),
+                    ),
                   ],
                 ),
                 SizedBox(height: 10 * scale),
                 BlocBuilder<WeatherForecastBloc, WeatherForecastState>(
                   builder: (context, state) {
                     if (state is WeatherForecastSuccess) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          WeatherBox(
-                            weatherImgPath: state.weatherConImgPaths[0],
-                            time: "now".tr(),
-                            degrees: state.temps[0],
-                          ),
-                          WeatherBox(
-                            weatherImgPath: state.weatherConImgPaths[1],
-                            time: state.times[1],
-                            degrees: state.temps[1],
-                          ),
-                          WeatherBox(
-                            weatherImgPath: state.weatherConImgPaths[2],
-                            time: state.times[2],
-                            degrees: state.temps[2],
-                          ),
-                          WeatherBox(
-                            weatherImgPath: state.weatherConImgPaths[3],
-                            time: state.times[3],
-                            degrees: state.temps[3],
-                          ),
-                          WeatherBox(
-                            weatherImgPath: state.weatherConImgPaths[4],
-                            time: state.times[4],
-                            degrees: state.temps[4],
-                          ),
-                          WeatherBox(
-                            weatherImgPath: state.weatherConImgPaths[5],
-                            time: state.times[5],
-                            degrees: state.temps[5],
-                          ),
-                        ],
+                      return Expanded(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: state.temps.length,
+                          padding: EdgeInsets.symmetric(horizontal: 5 * scale),
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 12 * scale,
+                              ),
+                              child: WeatherBox(
+                                weatherImgPath: state.weatherConImgPaths[index],
+                                time: index == 0
+                                    ? LocaleKeys.now.tr()
+                                    : state.times[index],
+                                degrees: state.temps[index],
+                              ),
+                            );
+                          },
+                        ),
                       );
                     } else if (state is WeatherForecastFailure) {
                       return Center(child: Text(state.error.toString()));

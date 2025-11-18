@@ -14,6 +14,8 @@ class TodayScreen extends StatefulWidget {
 }
 
 class _TodayScreenState extends State<TodayScreen> {
+  int selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     final scale = getIt<Responsiveness>().scale;
@@ -29,18 +31,32 @@ class _TodayScreenState extends State<TodayScreen> {
           BlocBuilder<CollapsedCubit, bool>(
             builder: (context, state) {
               if (state != true) {
-                return NavBar();
+                return NavBar(
+                  selectedIndex: selectedIndex,
+                  onTap: (index) {
+                    setState(() {
+                      selectedIndex = index;
+                    });
+                  },
+                );
               } else {
                 return SliverToBoxAdapter(child: SizedBox());
               }
             },
           ),
-          InfoBoxes(),
-          HourlyForecastPanel(),
-          DayForecast(),
-          ChanceOfRain(),
-          SunriseAndSunset(),
-          SliverToBoxAdapter(child: SizedBox(height: 20 * scale)),
+          if (selectedIndex == 0) ...[
+            InfoBoxes(),
+            HourlyForecastPanel(),
+            DayForecast(),
+            ChanceOfRain(),
+            SunriseAndSunset(),
+            SliverToBoxAdapter(child: SizedBox(height: 20 * scale)),
+          ] else if (selectedIndex == 1) ...[
+            SliverToBoxAdapter(child: Center(child: Text("Tomorrow Screen"))),
+          ] else ...[
+            TenDaysTiles(),
+            SliverToBoxAdapter(child: SizedBox(height: 25 * scale)),
+          ],
         ],
       ),
     );

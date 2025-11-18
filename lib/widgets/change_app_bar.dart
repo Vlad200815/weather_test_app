@@ -6,6 +6,8 @@ import 'package:weather_test_app/bloc/current_tem_and_feels_like/current_tem_and
 import 'package:weather_test_app/bloc/get_city_and_country_cubit/get_city_and_country_cubit.dart';
 import 'package:weather_test_app/bloc/weather_con_and_img_bloc/weather_con_and_img_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
+import 'package:weather_test_app/gen/named_args.dart';
+import 'package:weather_test_app/generated/lib/generated/locale_keys.g.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
 import 'package:weather_test_app/theme/app_colors.dart';
 import 'package:weather_test_app/widgets/nav_box.dart';
@@ -51,16 +53,18 @@ class _ChangeAppBarState extends State<ChangeAppBar> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "city_country",
+                        // "city_country",
+                        LocaleKeys.city_country.tr(
+                          namedArgs: {
+                            NamedArgs.city: state.city,
+                            NamedArgs.country: state.country,
+                          },
+                        ),
                         style: theme.textTheme.titleLarge?.copyWith(
                           color: AppColors.black,
                         ),
-                      ).tr(
-                        namedArgs: {
-                          "city": state.city,
-                          "country": state.country,
-                        },
                       ),
+
                       IconButton(
                         onPressed: () {
                           context.go("/search");
@@ -94,26 +98,28 @@ class _ChangeAppBarState extends State<ChangeAppBar> {
                         children: [
                           SizedBox(
                             height: 60 * scale,
-                            child:
-                                Text(
-                                  "weather",
-                                  style: theme.textTheme.displayMedium,
-                                ).tr(
-                                  namedArgs: {
-                                    "weather": "${state.currentTem.round()}",
-                                  },
-                                ),
+                            child: Text(
+                              // "weather",
+                              LocaleKeys.weather.tr(
+                                namedArgs: {
+                                  NamedArgs.weather:
+                                      "${state.currentTem.round()}",
+                                },
+                              ),
+                              style: theme.textTheme.displayMedium,
+                            ),
                           ),
                           Text(
-                            "feels_like",
+                            // "feels_like",
+                            LocaleKeys.feels_like.tr(
+                              namedArgs: {
+                                NamedArgs.feelsLikeDegrees:
+                                    "${state.feelsLike.round()}",
+                              },
+                            ),
                             style: theme.textTheme.titleSmall?.copyWith(
                               color: AppColors.black,
                             ),
-                          ).tr(
-                            namedArgs: {
-                              "feels_like_degrees":
-                                  "${state.feelsLike.round()}",
-                            },
                           ),
                         ],
                       );

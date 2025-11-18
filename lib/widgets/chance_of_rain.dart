@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:weather_test_app/bloc/rain_probability_bloc/rain_probability_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
+import 'package:weather_test_app/gen/assets.gen.dart';
+import 'package:weather_test_app/generated/lib/generated/locale_keys.g.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
 import 'package:weather_test_app/theme/app_colors.dart';
 import 'package:weather_test_app/widgets/chance_rain_proress.dart';
@@ -48,45 +50,37 @@ class ChanceOfRain extends StatelessWidget {
                             ),
                             child: Center(
                               child: SvgPicture.asset(
-                                "assets/icons/rain_chance.svg",
+                                // "assets/icons/rain_chance.svg",
+                                Assets.icons.rainChance,
                               ),
                             ),
                           ),
                           SizedBox(width: 8 * scale),
                           Text(
-                            "chance_of_rain",
+                            LocaleKeys.today.tr(),
                             style: theme.textTheme.labelMedium,
-                          ).tr(),
+                          ),
                         ],
                       ),
                       SizedBox(height: 10 * scale),
-                      ChanceRainProress(
-                        date: state.dates[0],
-                        percent: state.percents[0],
-                        progress: state.percents[0] != 0
-                            ? state.percents[0] / 100
-                            : state.percents[0].toDouble(),
-                      ),
-                      ChanceRainProress(
-                        date: state.dates[1],
-                        percent: state.percents[1],
-                        progress: state.percents[1] != 0
-                            ? state.percents[1] / 100
-                            : state.percents[1].toDouble(),
-                      ),
-                      ChanceRainProress(
-                        date: state.dates[2],
-                        percent: state.percents[2],
-                        progress: state.percents[2] != 0
-                            ? state.percents[2] / 100
-                            : state.percents[2].toDouble(),
-                      ),
-                      ChanceRainProress(
-                        date: state.dates[3],
-                        percent: state.percents[3],
-                        progress: state.percents[3] != 0
-                            ? state.percents[3] / 100
-                            : state.percents[3].toDouble(),
+                      Expanded(
+                        child: MediaQuery.removePadding(
+                          context: context,
+                          removeTop: true,
+                          child: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: 4,
+                            itemBuilder: (context, index) {
+                              return ChanceRainProress(
+                                date: state.dates[index],
+                                percent: state.percents[index],
+                                progress: state.percents[index] != 0
+                                    ? state.percents[index] / 100
+                                    : state.percents[index].toDouble(),
+                              );
+                            },
+                          ),
+                        ),
                       ),
                     ],
                   );

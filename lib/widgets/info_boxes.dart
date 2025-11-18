@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:weather_test_app/bloc/get_info_boxes_data_bloc/get_info_boxes_data_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
+import 'package:weather_test_app/gen/assets.gen.dart';
+import 'package:weather_test_app/generated/lib/generated/locale_keys.g.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
 import 'package:weather_test_app/widgets/info_box.dart';
 
@@ -32,14 +34,16 @@ class InfoBoxes extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       InfoBox(
-                        imgPath: "assets/icons/wind_speed.svg",
-                        title: "wind_speed".tr(),
+                        // imgPath: "assets/icons/wind_speed.svg",
+                        imgPath: Assets.icons.windSpeed,
+                        // title: "wind_speed".tr(),
+                        title: LocaleKeys.wind_speed.tr(),
                         subtitle: windSpeed,
                         rateChangeWidget: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SvgPicture.asset("assets/arrow_drop_up.svg"),
-
+                            // SvgPicture.asset("assets/arrow_drop_up.svg"),
+                            SvgPicture.asset(Assets.arrowDropUp),
                             Text(
                               "2 km/h",
                               style: theme.textTheme.labelSmall?.copyWith(
@@ -51,13 +55,16 @@ class InfoBoxes extends StatelessWidget {
                         ),
                       ),
                       InfoBox(
-                        imgPath: "assets/icons/rain_chance.svg",
-                        title: "rain_chance".tr(),
+                        // imgPath: "assets/icons/rain_chance.svg",
+                        imgPath: Assets.icons.rainChance,
+                        // title: "rain_chance".tr(),
+                        title: LocaleKeys.rain_chance.tr(),
                         subtitle: rainChance,
                         rateChangeWidget: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SvgPicture.asset("assets/arrow_drop_up.svg"),
+                            // SvgPicture.asset("assets/arrow_drop_up.svg"),
+                            SvgPicture.asset(Assets.arrowDropUp),
 
                             Text(
                               "24",
@@ -75,13 +82,17 @@ class InfoBoxes extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       InfoBox(
-                        imgPath: "assets/icons/pressure.svg",
-                        title: "pressure".tr(),
+                        // imgPath: "assets/icons/pressure.svg",
+                        imgPath: Assets.icons.pressure,
+
+                        // title: "pressure".tr(),
+                        title: LocaleKeys.pressure.tr(),
                         subtitle: pressure,
                         rateChangeWidget: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SvgPicture.asset("assets/arrow_drop_down.svg"),
+                            // SvgPicture.asset("assets/arrow_drop_down.svg"),
+                            SvgPicture.asset(Assets.arrowDropDown),
                             Text(
                               "32 hpa",
                               style: theme.textTheme.labelSmall?.copyWith(
@@ -93,14 +104,16 @@ class InfoBoxes extends StatelessWidget {
                         ),
                       ),
                       InfoBox(
-                        imgPath: "assets/icons/uv_index.svg",
-                        title: "uv_index".tr(),
+                        // imgPath: "assets/icons/uv_index.svg",
+                        imgPath: Assets.icons.uvIndex,
+                        // title: "uv_index".tr(),
+                        title: LocaleKeys.uv_index.tr(),
                         subtitle: uvIndex,
                         rateChangeWidget: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SvgPicture.asset("assets/arrow_drop_down.svg"),
-
+                            // SvgPicture.asset("assets/arrow_drop_down.svg"),
+                            SvgPicture.asset(Assets.arrowDropDown),
                             Text(
                               "0.3",
                               style: theme.textTheme.labelSmall?.copyWith(

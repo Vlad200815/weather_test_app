@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:weather_test_app/bloc/get_ten_days_weather_bloc/get_ten_day_weather_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
+import 'package:weather_test_app/gen/assets.gen.dart';
+import 'package:weather_test_app/generated/lib/generated/locale_keys.g.dart';
 import 'package:weather_test_app/services/capitalize.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
 import 'package:weather_test_app/theme/app_colors.dart';
@@ -26,27 +28,34 @@ class TenDaysTiles extends StatelessWidget {
       child: BlocBuilder<GetTenDayWeatherBloc, GetTenDayWeatherState>(
         builder: (context, state) {
           if (state is OnGetTenDayWeatherSuccess) {
-            return GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1, // how many columns
-                mainAxisSpacing: 20, // vertical spacing
-                crossAxisSpacing: 20, // horizontal spacing
-                childAspectRatio: 4,
+            return MediaQuery.removePadding(
+              context: context,
+              removeTop: true,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1, // how many columns
+                    mainAxisSpacing: 20, // vertical spacing
+                    crossAxisSpacing: 20, // horizontal spacing
+                    childAspectRatio: 4,
+                  ),
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return WeatherTile(
+                      dayName: index == 0
+                          ? LocaleKeys.today.tr()
+                          : toUpperCaseTheSecondWord(state.weekDays[index]),
+                      weatherCondition: state.weatherConditions[index],
+                      degrees: state.temps[index].toInt(),
+                      feelsLike: state.feelsLikes[index].toInt(),
+                      weatherImgPath: state.weahterConImgPaths[index],
+                    );
+                  },
+                ),
               ),
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return WeatherTile(
-                  dayName: index == 0
-                      ? "today".tr()
-                      : toUpperCaseTheSecondWord(state.weekDays[index]),
-                  weatherCondition: state.weatherConditions[index],
-                  degrees: state.temps[index].toInt(),
-                  feelsLike: state.feelsLikes[index].toInt(),
-                  weatherImgPath: state.weahterConImgPaths[index],
-                );
-              },
             );
           } else if (state is OnGetTenDayWeatherFailure) {
             return Center(child: Text(state.error.toString()));
@@ -147,7 +156,8 @@ class WeatherTile extends StatelessWidget {
                         color: AppColors.white,
                         shape: BoxShape.circle,
                       ),
-                      child: SvgPicture.asset("assets/expand_more.svg"),
+                      // child: SvgPicture.asset("assets/expand_more.svg"),
+                      child: SvgPicture.asset(Assets.expandMore),
                     ),
                   ),
                 ],

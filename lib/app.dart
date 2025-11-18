@@ -15,6 +15,7 @@ import 'package:weather_test_app/bloc/weather_con_and_img_bloc/weather_con_and_i
 import 'package:weather_test_app/bloc/weather_forecast_bloc/weather_forecast_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
 import 'package:weather_test_app/router/rounter.dart';
+// import 'package:weather_test_app/router/rounter.dart';
 import 'package:weather_test_app/services/determine_weather_condition.dart';
 import 'package:weather_test_app/services/location_service.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
@@ -78,6 +79,7 @@ class MyWeatherApp extends StatelessWidget {
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             routerConfig: router,
+            // home: TodayScreen(),
           ),
         );
       },

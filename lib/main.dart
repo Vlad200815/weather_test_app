@@ -13,6 +13,7 @@ import 'package:weather_test_app/api/models/weather_response_model.dart';
 import 'package:weather_test_app/app.dart';
 import 'package:weather_test_app/di/di.dart';
 import 'package:weather_test_app/firebase_options.dart';
+import 'package:weather_test_app/generated/codegen_loader.g.dart';
 import 'package:weather_test_app/services/location_service.dart';
 import 'package:weather_test_app/services/notification_service.dart';
 import 'package:weather_test_app/services/weather_api_service.dart';
@@ -82,6 +83,7 @@ Future<void> main() async {
       supportedLocales: [Locale('en', 'US'), Locale('uk', "UA")],
       path: 'assets/translations',
       fallbackLocale: Locale('en', "US"),
+      assetLoader: CodegenLoader(),
       child: MyWeatherApp(),
     ),
   );

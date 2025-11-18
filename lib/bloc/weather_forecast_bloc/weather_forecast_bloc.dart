@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_test_app/api/models/weather_response_model.dart';
-import 'package:weather_test_app/bloc/weather_con_and_img_bloc/weather_con_and_img_bloc.dart';
+// import 'package:weather_test_app/bloc/weather_con_and_img_bloc/weather_con_and_img_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
 import 'package:weather_test_app/services/determine_weather_condition.dart';
 
@@ -52,9 +52,9 @@ class WeatherForecastBloc
           .toList();
 
       if (index != -1) {
-        dates = convertedTimes.skip(index).take(6).toList();
-        temps = temps.skip(index).take(6).toList();
-        weatherConImgPaths = weatherConImgPaths.skip(index).take(6).toList();
+        dates = convertedTimes.skip(index).toList();
+        temps = temps.skip(index).toList();
+        weatherConImgPaths = weatherConImgPaths.skip(index).toList();
 
         log(
           "Dates: $dates, weatherConImgPaths: $weatherConImgPaths, temps: $temps",

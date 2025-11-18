@@ -36,7 +36,6 @@ class WeatherBox extends StatelessWidget {
               filterQuality: FilterQuality.high,
             ),
           ),
-          // SizedBox(height: 4 * scale),
           Text(
             "$degrees°",
             style: theme.textTheme.titleSmall?.copyWith(color: AppColors.black),

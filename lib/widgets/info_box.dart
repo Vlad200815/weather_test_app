@@ -74,21 +74,6 @@ class InfoBox extends StatelessWidget {
               top: 40 * scale,
               left: 108 * scale,
               child: rateChangeWidget,
-              // child: Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     isRateBigger
-              //         ? SvgPicture.asset("assets/arrow_drop_up.svg")
-              //         : SvgPicture.asset("assets/arrow_drop_down.svg"),
-              //     Text(
-              //       rateNum,
-              //       style: theme.textTheme.labelSmall?.copyWith(
-              //         fontSize: 10,
-              //         fontWeight: FontWeight.w500,
-              //       ),
-              //     ),
-              //   ],
-              // ),
             ),
           ],
         ),

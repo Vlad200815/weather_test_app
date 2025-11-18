@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:weather_test_app/di/di.dart';
+import 'package:weather_test_app/gen/assets.gen.dart';
+import 'package:weather_test_app/generated/lib/generated/locale_keys.g.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
 import 'package:weather_test_app/widgets/my_chart_bar.dart';
 
@@ -37,13 +39,15 @@ class DayForecast extends StatelessWidget {
                       height: 28 * scale,
                       width: 28 * scale,
                       decoration: BoxDecoration(shape: BoxShape.circle),
-                      child: SvgPicture.asset("assets/icons/day_forecast.svg"),
+                      // child: SvgPicture.asset("assets/icons/day_forecast.svg"),
+                      child: SvgPicture.asset(Assets.icons.dayForecast),
                     ),
                     SizedBox(width: 8 * scale),
                     Text(
-                      "day_forecast",
+                      // "day_forecast",
+                      LocaleKeys.day_forecast.tr(),
                       style: theme.textTheme.labelMedium,
-                    ).tr(),
+                    ),
                   ],
                 ),
                 SizedBox(height: 25 * scale),

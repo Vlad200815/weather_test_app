@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:weather_test_app/bloc/sunrise_and_sunset_bloc/sunrise_and_sunset_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
+import 'package:weather_test_app/gen/assets.gen.dart';
+import 'package:weather_test_app/generated/lib/generated/locale_keys.g.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
 import 'package:weather_test_app/widgets/widgets.dart';
 
@@ -29,15 +31,18 @@ class SunriseAndSunset extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InfoBox(
-                    imgPath: "assets/icons/sunrise.svg",
-                    title: "sunrise".tr(),
+                    // imgPath: "assets/icons/sunrise.svg",
+                    imgPath: Assets.icons.sunrise,
+                    // title: "sunrise".tr(),
+                    title: LocaleKeys.sunrise.tr(),
                     subtitle: state.sunrise,
                     rateChangeWidget: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset("assets/arrow_drop_up.svg"),
+                        // SvgPicture.asset("assets/arrow_drop_up.svg"),
+                        SvgPicture.asset(Assets.arrowDropUp),
                         Text(
-                          "4h age",
+                          "in 21h",
                           style: theme.textTheme.labelSmall?.copyWith(
                             fontSize: 10,
                             fontWeight: FontWeight.w500,
@@ -47,13 +52,16 @@ class SunriseAndSunset extends StatelessWidget {
                     ),
                   ),
                   InfoBox(
-                    imgPath: "assets/icons/sunset.svg",
-                    title: "sunset".tr(),
+                    // imgPath: "assets/icons/sunset.svg",
+                    imgPath: Assets.icons.sunrise,
+                    title: LocaleKeys.sunset.tr(),
                     subtitle: state.sunset,
                     rateChangeWidget: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset("assets/arrow_drop_up.svg"),
+                        // SvgPicture.asset("assets/arrow_drop_up.svg"),
+                        SvgPicture.asset(Assets.arrowDropUp),
+
                         Text(
                           "in 9 h",
                           style: theme.textTheme.labelSmall?.copyWith(

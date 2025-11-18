@@ -10,6 +10,9 @@ import 'package:weather_test_app/bloc/get_city_and_country_cubit/get_city_and_co
 import 'package:weather_test_app/bloc/average_day_and_night_temp_bloc/average_day_and_night_temp_bloc.dart';
 import 'package:weather_test_app/bloc/weather_con_and_img_bloc/weather_con_and_img_bloc.dart';
 import 'package:weather_test_app/di/di.dart';
+import 'package:weather_test_app/gen/assets.gen.dart';
+import 'package:weather_test_app/gen/named_args.dart';
+import 'package:weather_test_app/generated/lib/generated/locale_keys.g.dart';
 import 'package:weather_test_app/services/responsiveness.dart';
 import 'package:weather_test_app/theme/app_colors.dart';
 import 'package:weather_test_app/widgets/change_app_bar.dart';
@@ -48,7 +51,9 @@ class PosterAppBar extends StatelessWidget {
                         alignment: Alignment.center,
                         fit: StackFit.expand,
                         children: [
-                          Image.asset("assets/poster.png", fit: BoxFit.cover),
+                          // Image.asset("assets/poster.png", fit: BoxFit.cover),
+                          Image.asset(Assets.poster.path, fit: BoxFit.cover),
+
                           Padding(
                             padding: EdgeInsets.only(
                               left: 30 * scale,
@@ -70,13 +75,15 @@ class PosterAppBar extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "city_country",
+                                            // "city_country",
+                                            LocaleKeys.city_country.tr(
+                                              namedArgs: {
+                                                NamedArgs.city: state.city,
+                                                NamedArgs.country:
+                                                    state.country,
+                                              },
+                                            ),
                                             style: theme.textTheme.titleLarge,
-                                          ).tr(
-                                            namedArgs: {
-                                              "city": state.city,
-                                              "country": state.country,
-                                            },
                                           ),
                                           IconButton(
                                             onPressed: () {
@@ -118,36 +125,44 @@ class PosterAppBar extends StatelessWidget {
                                               children: [
                                                 SizedBox(
                                                   height: 96 * scale,
-                                                  child:
-                                                      Text(
-                                                        "degrees",
-                                                        style:
-                                                            state.currentTem
-                                                                    .round()
-                                                                    .toString()
-                                                                    .length >
-                                                                1
-                                                            ? theme
-                                                                  .textTheme
-                                                                  .displayLarge
-                                                                  ?.copyWith(
-                                                                    fontSize:
-                                                                        70,
-                                                                  )
-                                                            : theme
-                                                                  .textTheme
-                                                                  .displayLarge,
-                                                      ).tr(
-                                                        namedArgs: {
-                                                          "degrees": state
-                                                              .currentTem
-                                                              .round()
-                                                              .toString(),
-                                                        },
-                                                      ),
+                                                  child: Text(
+                                                    // "degrees",
+                                                    LocaleKeys.degrees.tr(
+                                                      namedArgs: {
+                                                        NamedArgs.degrees: state
+                                                            .currentTem
+                                                            .round()
+                                                            .toString(),
+                                                      },
+                                                    ),
+                                                    style:
+                                                        state.currentTem
+                                                                .round()
+                                                                .toString()
+                                                                .length >
+                                                            1
+                                                        ? theme
+                                                              .textTheme
+                                                              .displayLarge
+                                                              ?.copyWith(
+                                                                fontSize: 70,
+                                                              )
+                                                        : theme
+                                                              .textTheme
+                                                              .displayLarge,
+                                                  ),
                                                 ),
                                                 Text(
-                                                  "feels_like",
+                                                  // "feels_like",
+                                                  LocaleKeys.feels_like.tr(
+                                                    namedArgs: {
+                                                      NamedArgs
+                                                              .feelsLikeDegrees:
+                                                          state.feelsLike
+                                                              .round()
+                                                              .toString(),
+                                                    },
+                                                  ),
                                                   style:
                                                       state.currentTem
                                                               .toInt()
@@ -163,13 +178,6 @@ class PosterAppBar extends StatelessWidget {
                                                       : theme
                                                             .textTheme
                                                             .titleSmall,
-                                                ).tr(
-                                                  namedArgs: {
-                                                    "feels_like_degrees": state
-                                                        .feelsLike
-                                                        .round()
-                                                        .toString(),
-                                                  },
                                                 ),
                                               ],
                                             );
@@ -217,7 +225,7 @@ class PosterAppBar extends StatelessWidget {
                                                       .titleLarge,
                                                 ).tr(
                                                   namedArgs: {
-                                                    "weather":
+                                                    NamedArgs.weather:
                                                         state.weatherType,
                                                   },
                                                 ),
@@ -252,14 +260,14 @@ class PosterAppBar extends StatelessWidget {
                                           builder: (context, state) {
                                             if (state is DateSuccess) {
                                               return Text(
-                                                "date",
+                                                LocaleKeys.date,
                                                 style:
                                                     theme.textTheme.titleSmall,
                                               ).tr(
                                                 namedArgs: {
-                                                  "month": state.month,
-                                                  "day": state.day,
-                                                  "time": state.time,
+                                                  NamedArgs.month: state.month,
+                                                  NamedArgs.day: state.day,
+                                                  NamedArgs.time: state.time,
                                                 },
                                               );
                                             } else if (state is DateFailure) {
@@ -290,7 +298,8 @@ class PosterAppBar extends StatelessWidget {
                                                 MainAxisAlignment.end,
                                             children: [
                                               Text(
-                                                "day",
+                                                // "day",
+                                                LocaleKeys.day,
                                                 style: theme
                                                     .textTheme
                                                     .titleSmall
@@ -300,14 +309,15 @@ class PosterAppBar extends StatelessWidget {
                                                     ),
                                               ).tr(
                                                 namedArgs: {
-                                                  "day_average_tem": state
+                                                  NamedArgs.dayAverageTem: state
                                                       .averageDayTemp
                                                       .round()
                                                       .toString(),
                                                 },
                                               ),
                                               Text(
-                                                "night",
+                                                // "night",
+                                                LocaleKeys.night,
                                                 style: theme
                                                     .textTheme
                                                     .titleSmall
@@ -317,10 +327,10 @@ class PosterAppBar extends StatelessWidget {
                                                     ),
                                               ).tr(
                                                 namedArgs: {
-                                                  "night_average_tem": state
-                                                      .averageNightTemp
-                                                      .round()
-                                                      .toString(),
+                                                  NamedArgs.nightAverageTem:
+                                                      state.averageNightTemp
+                                                          .round()
+                                                          .toString(),
                                                 },
                                               ),
                                             ],
@@ -348,9 +358,6 @@ class PosterAppBar extends StatelessWidget {
                   ),
           );
         },
-        // child: FlexibleSpaceBar(
-        //   background:
-        // ),
       ),
     );
   }
